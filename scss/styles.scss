@@ -1,0 +1,168 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+body {
+    position: relative;
+}
+
+.page_wrapper {
+    padding: 14rem 2rem 12rem 2rem;
+}
+
+.carousel {
+    position: absolute;
+    top: 20%;
+    left: 7%;
+    z-index: 1;
+    width: 50%;
+
+    @media (max-width: 960px) {
+        display: none;
+    }
+}
+
+.slider-action{
+    position: absolute;
+    bottom: 26%;
+    z-index: 1;
+    left: 39%;
+}
+
+
+.box {
+    margin-bottom: 5rem;
+    position: relative;
+}
+
+.centered {
+    text-align: center !important;
+}
+
+.lefter {
+    text-align: left;
+}
+
+.spacer {
+    padding: 5rem;
+}
+
+.marginAuto {
+    margin: auto !important;
+}
+
+.verticaly {
+    display: none;
+    @media (min-width: 764px) {
+        display: block;
+    }
+}
+
+.footer {
+    position: absolute !important;
+    width: 100%;
+    padding-top: 4rem !important;
+}
+
+.brand {
+    font-family: 'Anton', sans-serif !important;
+    font-size: 3rem !important;
+    padding-top: 0 !important;
+
+    &:before {
+        content: '' !important;
+        height: 0 !important;
+        display: block !important;
+    }
+}
+
+.slogan {
+    width: 40%;
+    margin: auto;
+    padding: 0 0 2rem 0;
+    color: rgb(173, 171, 171);
+}
+
+.logo {
+    font-family: 'Anton', sans-serif !important;
+    font-size: 1.5rem !important;
+    letter-spacing: 0.1rem;
+}
+
+.brand_small {
+    color: olive !important;
+}
+
+.copyr {
+    text-align: center;
+    padding-top: 3rem;
+    color: lightgrey;
+}
+
+.leftAlign {
+    text-align: left;
+}
+
+.sideMenu {
+    padding-top: 7rem;
+    opacity: 0.8;
+}
+
+.form_style {
+    width: 70%;
+    margin: auto;
+}
+
+.spaceMargin {
+    margin: 1rem;
+}
+
+.header_info {
+    margin-left: 15%;
+}
+
+.recentered {
+    margin-left: -1rem !important;
+    @media (max-width: 320px) {
+        margin-left: -5rem !important;
+    }
+    @media (min-width: 321px) and (max-width: 700px) {
+        margin-left: -5rem !important;
+    }
+}
+
+.text-area {
+    border-color: #e8e8e8 !important;
+    color: #7b7b7b;
+
+    &:focus {
+        outline: gray !important;
+        border-color: teal !important;
+    }
+}
+
+.task-box {
+    margin: 1rem auto !important;
+    width: 70%;
+}
+
+.task {
+    background-color: white;
+    padding: 1rem !important;
+    box-shadow: 0.5rem 0.2rem 0.2rem 0rem #efefef;
+    margin: 0.2rem;
+    border-radius: 5px;
+}
+
+.animated-tab {
+    animation-duration: 1s;
+    animation-name: changeTab;
+    transition: all 1s;
+}
+
+@keyframes changeTab {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}

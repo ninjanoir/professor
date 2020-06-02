@@ -1,0 +1,35 @@
+{
+  "name": "coach",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "nodemon server/index.js",
+    "build": "next build",
+    "start": "next start"
+  },
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "body-parser": "^1.19.0",
+    "config": "^3.3.1",
+    "cookie-parser": "^1.4.5",
+    "express": "^4.17.1",
+    "fawn": "^2.1.5",
+    "gsap": "^3.2.6",
+    "joi-objectid": "^3.0.1",
+    "js-cookie": "^2.2.1",
+    "jsonwebtoken": "^8.5.1",
+    "lodash": "^4.17.15",
+    "moment": "^2.26.0",
+    "mongoose": "^5.9.13",
+    "multer": "^1.4.2",
+    "next": "9.3.6",
+    "nodemon": "^2.0.3",
+    "react": "16.13.1",
+    "react-dom": "16.13.1",
+    "sass": "^1.26.5",
+    "semantic-ui-css": "^2.4.1",
+    "semantic-ui-react": "^0.88.2"
+  }
+}
