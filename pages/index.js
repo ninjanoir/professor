@@ -1,4 +1,4 @@
-import Slider from "./../components/slider";
+import Slider from "./../components/Slider";
 import { Card, Grid, Dimmer, Image, Button, Header,Icon } from "semantic-ui-react";
 import Video from "../components/Embed";
 import Comments from "../components/Feed";
