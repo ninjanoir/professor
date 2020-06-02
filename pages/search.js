@@ -91,17 +91,18 @@ const Search = ({ coachs }) => {
 
     return (
         <Sidebar.Pushable as={Segment} basic>
+
             <Sidebar
                 as={Menu}
                 animation='overlay'
                 inverted
                 icon='labeled'
-                onHide={() => setState({ ...state, visible: false })}
+                onHide={() => setState({visible: false })}
                 vertical
                 visible={state.visible}
                 width='wide'
                 className='sideMenu'>
-                <Menu.Item>
+                <Menu.Item as='div'>
                     <Input
                         style={{ height: '3em', fontSize: '0.8em' }}
                         size='small'

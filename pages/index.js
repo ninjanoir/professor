@@ -1,10 +1,10 @@
-import Slider from "./../components/slider";
+import Slider from "./../components/Slider";
 import { Card, Grid, Dimmer, Image, Button, Header,Icon } from "semantic-ui-react";
 import Video from "../components/Embed";
 import Comments from "../components/Feed";
 import Paginate from "../components/Paginate";
 import StayTuned from './../components/StayTuned';
-import Router from 'next/router'
+
 
 
 class Index extends React.Component {
