@@ -401,6 +401,12 @@ class Member extends React.Component {
                     </Item.Content>
                 </Item>
 
+                <Item>
+                    <Item.Content style={{padding:'1rem'}}>
+                        <Button icon='world' labelPosition='left' onClick={() => Router.push(`/profile/${this.state.coach._id}`)} content='Voir profil public' />
+                    </Item.Content>
+                </Item>
+                                    
                 <Header> Vos coordonnées </Header>
 
                 <Item>
@@ -674,9 +680,9 @@ class Member extends React.Component {
     }
 
     render() {
-        // console.log(this.state.member)
-        // console.log(this.state.competences)
-        // console.log(this.state.coach)
+        console.log(this.state.member)
+        console.log(this.state.competences)
+        console.log(this.state.coach)
 
         return (
             <div style={{ padding: '7rem' }}>

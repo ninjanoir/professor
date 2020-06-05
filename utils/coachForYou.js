@@ -1,5 +1,9 @@
 import axios from 'axios'
+import getConfig from 'next/config'
+
+const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+
 
 export default axios.create({
-    baseURL: 'http://localhost:5000/api'
+    baseURL: `${publicRuntimeConfig.DOMAIN}/api`
 })
