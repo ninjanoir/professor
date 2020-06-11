@@ -18,7 +18,7 @@ module.exports = {
     },
     publicRuntimeConfig: {
 
-        DOMAIN,
-        
+        DOMAIN: DOMAIN
+
     },
 }
