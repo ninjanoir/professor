@@ -9,9 +9,16 @@ module.exports = {
     serverRuntimeConfig: {
 
         SECRET: config.get('jwtPrivateKey'),
+        MAILBOX: config.get('MAILBOX'),
+        PASSWORD: config.get('PASSWORD'),
+        USER: config.get('USER'),
+        HOSTSMTP: config.get('HOSTSMTP'),
+
+
     },
     publicRuntimeConfig: {
 
         DOMAIN,
+        
     },
 }

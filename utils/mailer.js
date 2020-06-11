@@ -1,22 +1,25 @@
 const nodemailer = require('nodemailer')
+const config = require('config')
+
 
 const mailer = async ({ nom, email, message }) => {
+
 
     let response = {}
 
     let transporter = nodemailer.createTransport({
-        host: 'mail.alainrobinson.yj.fr',
-        port: 465,
+        host: config.get('HOSTSMTP'),
+        port: config.get('HOSTPORT'),
         secure: true,
         auth: {
-            user: 'contact@alainrobinson.yj.fr',
-            pass: 'Vanina10&',
+            user: config.get('USER'),
+            pass: config.get('PASSWORD'),
         },
     })
 
     let data = {
         from: `${nom} <${email}>`,
-        to: 'alain.robinson@outlook.fr',
+        to: config.get('MAILBOX'),
         subject: 'Message from CoachForYou',
         text: message,
         html: `<p>${message}</p>`,
