@@ -1,4 +1,4 @@
-import { Card, Rating, Button, Icon } from 'semantic-ui-react'
+import { Card, Rating, Button, Icon, Header } from 'semantic-ui-react'
 import { useRouter } from 'next/router';
 
 const Slider = () => {
@@ -20,18 +20,21 @@ const Slider = () => {
             </div>
 
             <div className='slider-action'>
+                    <Header as='h1' className='brand' inverted style={{fontSize: '4vh !important'}} >Pour un monde meilleur, soyez le meilleur ! </Header>
+
                 <Button
+                    icon
                     size='big'
-                    color='black'
+                    color='red'
+                    labelPosition='right'
                     onClick={() => router.push('/search')}>
-                        <Icon name='searchengin' />
-                    Find your coach
+                        <Icon name='right arrow'/> Coachs OnLine !
                 </Button>
             </div>
 
             <img
                 className='ui fluid image fit'
-                src='https://cdn.pixabay.com/photo/2016/02/19/11/54/surfing-1210040_960_720.jpg'
+                src='/intro.jpg'
                 alt='coach'
             />
         </div>

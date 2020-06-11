@@ -41,10 +41,11 @@ const Login = () => {
     const handleSubmit = async e => {
         e.preventDefault()
 
+
+
         let errs = validate()
 
         if (Object.values(errs).length === 0) {
-            //TODO: change state isLoggin
 
             const { email, password } = state
 
@@ -57,15 +58,15 @@ const Login = () => {
                             res.headers['x-auth-token'],
                             {
                                 expires: 1 / 48,
-                                sameSite: 'strict',
+                                SameSite: 'strict',
                             }
                         )
-                        router.push('/member')
+                        router.replace('/member')
                     } else {
                         return
                     }
                 })
-                .catch(e => console.error(e))
+                .catch(e => console.error('login failed------',e))
         } else {
             setErrors(errs)
         }
@@ -170,7 +171,7 @@ const Login = () => {
                         verticalAlign='middle'
                         className='centered'>
                         <Button
-                            onClick={() => router.push('/register')}
+                            onClick={() => router.replace('/register')}
                             icon
                             labelPosition='left'>
                             <Icon name='signup' />

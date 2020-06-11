@@ -1,79 +1,85 @@
-import { Item, Container, Header, Card } from "semantic-ui-react";
-
+import { Item, Container, Header, Card } from 'semantic-ui-react'
 
 const About = () => (
-  <div className="page_wrapper">
-    <Item.Group>
-      <Item>
-        <Item.Image src="/arobinson.png" size="tiny" circular />
-        <Item.Content verticalAlign="middle">
-          <Item.Header as="a"> Alain Robinson</Item.Header>
-          <Item.Meta>Develeppeur web</Item.Meta>
-          <Item.Description>
-            Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid
-            quidem aspernatur adipisci eaque ratione. Qui aliquid natus ipsum
-            obcaecati neque.
-          </Item.Description>
-        </Item.Content>
-      </Item>
-    </Item.Group>
+    <div className='page_wrapper'>
+        <Item.Group className='container'>
+            <Item>
+                <Item.Image src='/arobinson.png' size='tiny' circular />
+                <Item.Content verticalAlign='middle'>
+                    <Item.Header as='a'> Alain Robinson</Item.Header>
+                    <Item.Meta>Develeppeur web full stack</Item.Meta>
+                    <Item.Description>
+                        J'ai le plaisir de vous présenter le réseau coachForYou.
+                        Si le partage est une valeur qui vous parle je vous
+                        invite donc à vous inscrire de participer à
+                        l'élaboration et à la réussite de projets multiples. Vos
+                        expériences peuvent aider à changer le monde. Quelqu'un,
+                        quelque part, pourra bénéficier de votre expérience dans
+                        les domaines qui sont les vôtres
+                    </Item.Description>
+                </Item.Content>
+            </Item>
+        </Item.Group>
 
-    <Container textAlign="justified">
-      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Voluptate nam
-      rem quibusdam velit ut incidunt perferendis minus culpa similique soluta.
-      Deleniti quas laboriosam eligendi minima, officia eos officiis nobis. Amet
-      enim ullam quos deleniti ad labore, hic culpa accusantium nesciunt rem a
-      tempore possimus quo veniam blanditiis officiis. Labore, officia.
-      <div className="spacer">
-        <Header as="h2" className='spacer'>Quel coach etes vous ?</Header>
+        <Container textAlign='justified'>
+            Les catégories évoluent et de nouvelles sont à l'étude. Cependant
+            Celles déjà disponibles vous garantissent de nombreux projets en
+            cours qui ont besoin de vous. Mon rêve est de pouvoir aider de
+            nombreuses personnes dans le monde et valoriser l'entraide et le
+            partage de connaissance. Le monde sera un lieu plus agréable à
+            vivre, car la paix, la joie sera nôtre.
+            <div className='spacer'>
+                <Header as='h2' className='spacer brand'>
+                    Quel coach etes vous ?
+                </Header>
 
-        <Card.Group itemsPerRow={4} stackable>
-          <Card
-            meta="coach emploi"
-            raised
-            image='https://image.freepik.com/photos-gratuite/concept-presentation-femme-affaires-heureux_23-2147702550.jpg'
-          />
-          <Card
-            meta="coach cuisine"
-            raised
-            image='https://image.freepik.com/photos-gratuite/vue-dessus-aliments-sains-vs-aliments-malsains_23-2148194603.jpg'
-          />
-          <Card
-            meta="coach sportif"
-            raised
-            image='https://image.freepik.com/photos-gratuite/grimpeur-mur-paysage_23-2147665029.jpg'
-          />
-          <Card
-            meta="informatique"
-            raised
-            image='https://image.freepik.com/photos-gratuite/gros-plan-sourire-technicien-male-se-serrer-main-dans-centre-service_23-2147883870.jpg'
-          />
-
-          {/* ------------------------------------------------ */}
+                <Card.Group itemsPerRow={4} stackable>
                     <Card
-            meta="Photographe"
-            raised
-            image='https://image.freepik.com/photos-gratuite/studio-photo-moderne-equipements-professionnels-lumieres-rougeoyantes_23-2148038959.jpg'
-          />
-          <Card
-            meta="Coach bricolage"
-            raised
-            image='https://image.freepik.com/photos-gratuite/arrangement-maison-partir-outils-reparation-jaunes-plat_23-2148393072.jpg'
-          />
-          <Card
-            meta="Coach musique"
-            raised
-            image='https://image.freepik.com/photos-gratuite/femme-guitare-fond-ciel_23-2147769090.jpg'
-          />
-          <Card
-            meta="coach Web dev"
-            raised
-            image='https://image.freepik.com/photos-gratuite/vue-frontale-homme-femme-examiner-reactions-application_23-2148291493.jpg'
-          />
-        </Card.Group>
-      </div>
-    </Container>
-  </div>
-);
+                        meta='Emploi'
+                        raised
+                        image='https://images.unsplash.com/photo-1584048333538-9522c04a735f?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
+                    />
+                    <Card
+                        meta='Cuisine'
+                        raised
+                        image='https://images.unsplash.com/photo-1573407947625-124549936954?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
+                    />
+                    <Card
+                        meta='Sport'
+                        raised
+                        image='https://images.unsplash.com/photo-1579119986241-5e72d26cb690?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
+                    />
+                    <Card
+                        meta='informatique'
+                        raised
+                        image='https://images.unsplash.com/photo-1542494553-a6ce0f1f6ece?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=400&q=60'
+                    />
 
-export default About;
+                    {/* ------------------------------------------------ */}
+                    <Card
+                        meta='Photographie'
+                        raised
+                        image='https://images.unsplash.com/photo-1586796676778-2c50b6bc3937?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
+                    />
+                    <Card
+                        meta='Bricolage'
+                        raised
+                        image='https://images.unsplash.com/photo-1553429938-0c318ee3de7a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=600&q=60'
+                    />
+                    <Card
+                        meta='Musique'
+                        raised
+                        image='https://images.unsplash.com/flagged/photo-1574869189423-bc7316873c70?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=500&q=80'
+                    />
+                    <Card
+                        meta='Seduction'
+                        raised
+                        image='https://images.unsplash.com/photo-1583324217880-5f4d23550f94?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=809&q=80'
+                    />
+                </Card.Group>
+            </div>
+        </Container>
+    </div>
+)
+
+export default About

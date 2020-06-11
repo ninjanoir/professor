@@ -23,7 +23,7 @@ router.get(
         payload['membreInfo'] = member
 
         const avatar = await Avatar.findOne({ membre: req.member._id }).select(
-            '-_id -membre -__v'
+            '-membre -__v'
         )
         if (avatar) {
             payload['profileImage'] = avatar
@@ -38,7 +38,7 @@ router.get(
         }
 
 
-        let entreprise = await Entreprise.findOne({ membre: req.member._id }).select('-_id -__v -membre')
+        let entreprise = await Entreprise.findOne({ membreId: req.member._id }).select('-_id -__v -membre')
         if(entreprise) {payload['entreprise']= entreprise}
 
         res.status(200).send(payload)
@@ -52,17 +52,17 @@ router.put(
         let update = {}
 
         for (let [key, value] of Object.entries(req.body)) {
-            update[`${key}`] = `${value}`
+            update[`${key}`] = value
         }
 
         const member = await Member.findByIdAndUpdate(
             req.member._id,
             update
-        ).select('-password -__v -createAt -confirmed -_id')
+        ).select('-password -__v -createAt -confirmed -_id').catch(e => console.error('update member failed-----', e))
 
         if (!member) return res.status(400).send('aucun membre ne correspond')
 
-        res.status(200).send(member)
+        res.status(200).json({success: true})
     })
 )
 

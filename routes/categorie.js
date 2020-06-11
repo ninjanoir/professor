@@ -1,6 +1,6 @@
 const express = require('express')
 const router = express.Router()
-const { Categorie, validate } = require('../models/categorie')
+const { Categorie } = require('../models/categorie')
 
 router.post('/', async (req, res) => {
     const cat = new Categorie({
@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
 router.get('/:slug', async (req, res) => {
     let cats = await Categorie.find({
         nom: { $regex: '.*' + req.params.slug + '.*' },
-    })
+    }).catch(e => console.error('loading categorie failed', e))
 
     res.status(200).send(cats)
 })

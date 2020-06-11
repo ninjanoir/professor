@@ -1,94 +1,121 @@
-import { Form, Button } from "semantic-ui-react";
+import { Form, Button, Message } from 'semantic-ui-react'
+import coachForYou from '../utils/coachForYou'
 
 export default class Contact extends React.Component {
     state = {
-        nom: "",
-        prenom: "",
-        message: "",
+        nom: '',
+        email: '',
+        message: '',
         errors: {},
-    };
+        info: '',
+    }
 
+    onSubmit = e => {
+        e.preventDefault()
 
-    onSubmit = (e) => {
-        e.preventDefault();
+        const { nom, email, message } = this.state
 
-        let errs = this.validate();
+        let errs = this.validate()
 
         if (Object.values(errs).length === 0) {
-            console.log(this.state)
+            coachForYou
+                .post('/mailer', { nom, email, message })
+                .then(res => {
+                    if (res.data.success) {
+                        this.setState({
+                            info: 'message envoyé avec succes',
+                            nom: '',
+                            email: '',
+                            message: '',
+                        })
+                    }
+                })
+                .catch(e => console.error('mailer failed---', e))
         } else {
-        this.setState({ errors: errs });
-        console.log(errs);
+            this.setState({ errors: errs })
+            console.log(errs)
         }
-    };
+    }
 
-    handleChange = (e) => {
+    handleChange = e => {
         this.setState({
-        [e.target.name]: e.target.value,
-        errors: {...this.state.errors, [e.target.name]: "" },
-        });
-    };
+            [e.target.name]: e.target.value,
+            errors: { ...this.state.errors, [e.target.name]: '' },
+        })
+    }
 
     validate = () => {
-        let error = {};
-        const { nom, prenom, message } = this.state;
+        let error = {}
+        const { nom, email, message } = this.state
 
         if (!nom) {
-        error.nom = " champs nom requis";
+            error.nom = ' champs nom requis'
         }
-        if (!prenom) {
-        error.prenom = "champs prenom requis";
+        if (!email) {
+            error.email = 'champs email requis'
         }
 
         if (!message) {
-        error.message = "champs message requis";
+            error.message = 'champs message requis'
         }
-        return error;
-    };
+        return error
+    }
+
+    renderInfo = () => {
+        setTimeout(() => {
+            this.setState({ info: '' })
+        }, 4000)
+
+        return <Message info>{this.state.info}</Message>
+    }
 
     render() {
-        const { nom, prenom, message, errors } = this.state;
+        const { nom, email, message, errors, info } = this.state
         return (
-        <div className="page_wrapper ui container">
-            <h1 className="ui header">Contactez nous</h1>
-            <Form onSubmit={this.onSubmit}>
-            <Form.Field>
-                <Form.Input
-                label="Nom"
-                name="nom"
-                onChange={this.handleChange}
-                value={nom}
-                error={errors.nom ? errors.nom : false}
-                />
-            </Form.Field>
+            <div className='page_wrapper ui container'>
+                <h1 className='ui header brand'>Contactez nous</h1>
 
-            <Form.Field>
-                <Form.Input
-                label="Prénom"
-                name="prenom"
-                onChange={this.handleChange}
-                value={prenom}
-                error={errors.prenom ? errors.prenom : false}
-                />
-            </Form.Field>
+                <Form onSubmit={this.onSubmit}>
+                    {info ? this.renderInfo() : null}
+                    <Form.Field>
+                        <Form.Input
+                            label='Nom'
+                            name='nom'
+                            onChange={this.handleChange}
+                            value={nom}
+                            error={errors.nom ? errors.nom : false}
+                            placeholder=' John Doe'
+                        />
+                    </Form.Field>
 
-            <Form.Field>
-                <Form.TextArea
-                label="message"
-                name="message"
-                placeholder="merci pour toute précision"
-                onChange={this.handleChange}
-                value={message}
-                error={errors.message ? errors.message : false}
-                />
-            </Form.Field>
+                    <Form.Field>
+                        <Form.Input
+                            label='Adresse Email'
+                            type='email'
+                            name='email'
+                            onChange={this.handleChange}
+                            value={email}
+                            error={errors.email ? errors.email : false}
+                            placeholder='example@example.com'
+                        />
+                    </Form.Field>
 
-            <Form.Field>
-                <Button type="submit">Envoyer</Button>
-            </Form.Field>
-            </Form>
+                    <Form.Field>
+                        <Form.TextArea
+                            label='message'
+                            name='message'
+                            placeholder='merci pour toute précision'
+                            onChange={this.handleChange}
+                            value={message}
+                            error={errors.message ? errors.message : false}
+                        />
+                    </Form.Field>
 
-        </div>
-        );
+                    <Form.Field>
+                        <Button type='submit'>Envoyer</Button>
+                    </Form.Field>
+                </Form>
+            </div>
+        )
     }
 }

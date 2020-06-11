@@ -2,7 +2,7 @@ import coachForYou from '../utils/coachForYou'
 import Router from 'next/router'
 import Cookies from 'js-cookie'
 import moment from 'moment'
-import _ from 'lodash'
+
 import {
     Item,
     Button,
@@ -29,9 +29,9 @@ class Member extends React.Component {
             entreprise: {},
             coach: {},
             file: null,
-            message: null,
+            message: '',
             activeTab: 'profile',
-            competences: [],
+            competence: [],
             results: [],
             value: '',
         }
@@ -39,7 +39,178 @@ class Member extends React.Component {
         this.inputRef = React.createRef()
     }
 
-    getMember = () => {
+    //--------------Select catégorie de compétence------------
+    handleSelect = e => {
+        let choice = {}
+
+        if (!e.target.textContent) {
+            return
+        } else {
+            if (e.target.attributes[0].value === 'title') {
+                choice.icon = e.target.parentNode.parentNode.attributes[0].value
+                choice.nom = e.target.textContent
+            } else {
+                choice.icon = e.target.attributes[0].value
+                choice.nom = e.target.textContent
+            }
+        }
+
+        this.setState(
+            {
+                competence: [...this.state.competence, choice],
+                value: '',
+            },
+            () => this.submitCompetences()
+        )
+    }
+
+    setSearchValue = event => {
+        this.setState({ value: event.currentTarget.value })
+    }
+
+    handleDelete = categorie => {
+        if (this.state.competence.length === 1) {
+            this.setState({ competence: [] })
+        } else {
+            let newtab = this.state.competence.filter(comp => {
+                return comp !== categorie
+            })
+            this.setState(
+                {
+                    competence: newtab,
+                },
+                () => this.submitCoach()
+            )
+        }
+    }
+
+    //------------Update Membre profile, Coach, Entreprise--------------------
+    submitUpdateMember = async e => {
+        e.stopPropagation()
+
+        coachForYou
+            .put('/member/update', { [e.target.name]: e.target.value })
+            .then(res => {
+                console.log(res.data)
+            })
+            .catch(e => console.log(e))
+
+        return
+    }
+
+    submitCompetences = async () => {
+        const { member, competence } = this.state
+
+        let request = member.isCoach
+            ? coachForYou.put('/coach/update', { competence })
+            : coachForYou.post('/coach', { competence })
+
+        request
+            .then(res => {
+                if (res.data.success) {
+                    console.log('update competence reussi')
+                }
+            })
+            .catch(e => console.log(e))
+    }
+
+    submitCoach = async e => {
+        const { coach, member } = this.state
+
+        let request = member.isCoach
+            ? coachForYou.put('/coach/update', coach)
+            : coachForYou.post('/coach', coach)
+
+        request
+            .then(res => {
+                if (res.data.success) {
+                    this.setState(
+                        { message: 'mise à jour du profil réussi' },
+                        () => this.renderMessage()
+                    )
+                } else {
+                    this.setState({ message: 'Echec de la mise à jour' }, () =>
+                        this.renderMessage()
+                    )
+                }
+            })
+            .catch(e => console.error('submit coach failed------', e))
+    }
+
+    submitEntreprise = async e => {
+        const { entreprise } = this.state
+        let update = {
+            [e.target.name]: entreprise[e.target.name],
+        }
+        let request =
+            Object.values(this.state.entreprise).length === 1
+                ? coachForYou.post('/pros', entreprise)
+                : coachForYou.put('/pros/update', update)
+
+        request
+            .then(res => {
+                if (res.data.success) {
+                    console.log('update success')
+                }
+            })
+            .catch(e => console.error(e))
+    }
+
+    updateMember = e => {
+        e.stopPropagation()
+        this.setState({
+            member: {
+                ...this.state.member,
+                [e.target.name]: e.target.value,
+            },
+        })
+
+        return
+    }
+
+    setEnterprise = e => {
+        this.setState({
+            entreprise: {
+                ...this.state.entreprise,
+                [e.target.name]: e.target.value,
+            },
+        })
+
+        return
+    }
+
+    setCoach = e => {
+        this.setState({
+            coach: {
+                ...this.state.coach,
+                [e.target.name]: e.target.value,
+            },
+        })
+
+        return
+    }
+
+    //-------------------------------------life cycle : -------------------------------------
+    componentDidMount() {
+        const token = Cookies.get('x-auth-token')
+
+        if (!token) {
+            Router.replace('/login')
+        } else {
+            this.getMember()
+        }
+    }
+
+    componentDidUpdate(prevState) {
+        //competences
+        this.getCategorie()
+    }
+
+    componentWillUnmount() {
+        console.log('from didUnmount')
+    }
+
+    getMember = async () => {
         coachForYou
             .get('/member')
             .then(res => {
@@ -54,7 +225,7 @@ class Member extends React.Component {
                             res.data.profileImage
                         ),
                         coach: res.data.coachInfo,
-                        competences: res.data.coachInfo.competence,
+                        competence: res.data.coachInfo.competence,
                     })
                 } else if (!res.data.coachProfil && res.data.profileImage) {
                     this.setState({
@@ -67,7 +238,7 @@ class Member extends React.Component {
                     this.setState({
                         member: res.data.membreInfo,
                         coach: res.data.coachInfo,
-                        competences: res.data.coachInfo.competence,
+                        competence: res.data.coachInfo.competence,
                     })
                 } else {
                     this.setState({ member: res.data.membreInfo })
@@ -86,8 +257,7 @@ class Member extends React.Component {
                     if (res.data.length !== 0) {
                         let tab = []
                         tab = res.data.map((s, index) => {
-                            const { _id, nom, icon } = s
-                            let id = _id
+                            const { nom, icon } = s
                             let title = nom
                             let image = (
                                 <Icon color='teal' size='big' name={icon} />
@@ -102,155 +272,58 @@ class Member extends React.Component {
         }
     }
 
-    handleSelect = e => {
-        let choice = {}
-
-        if (!e.target.textContent) {
-            return
-        } else {
-            if (e.target.attributes[0].value === 'title') {
-                choice.icon = e.target.parentNode.parentNode.attributes[0].value
-                choice.nom = e.target.textContent
-            } else {
-                choice.icon = e.target.attributes[0].value
-                choice.nom = e.target.textContent
-            }
-        }
-
-        this.setState(
-            {
-                competences: [...this.state.competences, choice],
-                value: '',
-            },
-            () => this.submitCompetences()
-        )
-    }
-
-    setSearchValue = event => {
-        this.setState({ value: event.currentTarget.value })
-    }
-
-    submitUpdateMember = async e => {
-        e.stopPropagation()
-        const { nationalite, phone, dateNaissance } = this.state.member
-
-        if (nationalite) {
-            coachForYou
-                .put('/member/update', { nationalite })
-                .then(res => {
-                    console.log(res.data)
-                })
-                .catch(e => console.log(e))
-        }
-
-        if (phone) {
-            coachForYou
-                .put('/member/update', { phone })
-                .then(res => console.log(res.data))
-                .catch(e => console.log(e))
-        }
-
-        if (dateNaissance) {
-            coachForYou
-                .put('/member/update', { dateNaissance })
-                .then(res => console.log(res.data))
-                .catch(e => console.log(e))
-        }
-
-        return
-    }
-
-    submitCompetences = async () => {
-        let request
-        if (this.state.member.isCoach) {
-            request = coachForYou.put('/coach/update', {
-                competence: this.state.competences,
-            })
-        } else {
-            request = coachForYou.post('/coach', {
-                competence: this.state.competences,
-            })
-        }
-
-        request
-            .then(res => {
-                if (res.data.success) {
-                    console.log(res.data.response)
-                }
-            })
-            .catch(e => console.log(e))
-    }
-
-    submitCoach = async (e) => {
-
-        const { coach } = this.state
-
-        if (this.state.member.isCoach) {
-            coachForYou
-                .put('/coach/update', coach)
-                .then(res => {
-                    console.log('response sumit coach', res)
-                })
-                .catch(e => console.error(e))
-        } else {
-            coachForYou
-                .post('/coach', coach)
-                .then(res => {
-                    console.log('response sumit coach', res)
-                })
-                .catch(e => console.error(e))
-        }
-    }
-
-    submitEntreprise = async e => {
-        const { entreprise } = this.state
-        let update = {
-            [e.target.name]: entreprise[e.target.name],
-        }
-        let request =
-            Object.values(this.state.entreprise).length === 1
-                ? coachForYou.post('/pros', entreprise)
-                : coachForYou.put('/pros/update', update)
-
-        console.log(request)
-
-        request
-            .then(res => {
-                if (res.data.success) {
-                    console.log('update success')
-                }
-            })
-            .catch(e => console.error(e))
-    }
-
-    componentDidMount() {
-        const token = Cookies.get('x-auth-token')
-        console.log('didMount file state', this.state.file)
-
-        if (!token) {
-            Router.push('/login')
-        } else {
-            this.getMember()
-            console.log('appel du component')
-        }
-    }
-
-    componentDidUpdate(prevState) {
-        //competences
-        this.getCategorie()
-    }
-
-    componentWillUnmount() {
-        console.log('from didUnmount')
-    }
-
+    //--------------------------------------upload File--------------------------------
     fileChange = e => {
         e.stopPropagation()
-        //verif file exist
+
+        console.log('file change scope--------member avatar id',this.state.member)
+
         this.setState({ file: e.target.files[0] }, () =>
             this.setState({ message: this.state.file.name })
         )
     }
+
+    fileUpload = () => {
+        let form = new FormData()
+
+        
+
+        const { file, member } = this.state
+        const headers = {
+            'Content-type': 'multipart/form-data',
+        }
+
+        form.append('avatar', file)
+
+        let avartarId = member._id
+
+        let request = member.avatar
+            ? coachForYou.put(`/upload/${avartarId}`, form, { headers })
+            : coachForYou.post('/upload', form, { headers })
+
+        request
+            .then(response => {
+                if (response.data.success) {
+                    this.setState(
+                        {
+                            message: 'fichier envoyé avec succées',
+                        },
+                        () => {
+                            this.renderMessage()
+                        }
+                    )
+                }
+            })
+            .catch(e => console.error('file upload failed--->', e))
+    }
+
+    renderMessage = () => {
+        setTimeout(() => {
+            this.setState({ message: '' }, () => Router.reload())
+        }, 3000)
+    }
+
+    //--------------------------------------hadle Tab----------------------------------
 
     handleActivTab = val => {
         this.setState({ activeTab: val })
@@ -271,76 +344,10 @@ class Member extends React.Component {
         }
     }
 
-    fileUpload = () => {
-        const form = new FormData()
-        if (!this.state.member.avatar) {
-            form.append('avatar', this.state.file)
-            coachForYou
-                .post('/upload', form, {
-                    headers: {
-                        'Content-type': 'multipart/form-data',
-                    },
-                })
-                .then(response => {
-                    if (response.data.success) {
-                        this.setState({
-                            message: 'fichier envoyé avec succées',
-                        })
-                    }
-                })
-                .catch(e => console.error('une erreur', e))
-        } else {
-            form.append('avatar', this.state.file)
-            coachForYou
-                .put('/upload', form, {
-                    headers: {
-                        'Content-type': 'multipart/form-data',
-                    },
-                })
-                .then(response => {
-                    if (response.data.success) {
-                        this.setState({
-                            message: 'fichier envoyé avec succées',
-                        })
-                    }
-                })
-                .catch(e => console.error('une erreur', e))
-        }
-    }
-
-    updateMember = e => {
-        e.stopPropagation()
-        this.setState({
-            member: {
-                ...this.state.member,
-                [e.target.name]: e.target.value,
-            },
-        })
-    }
-
-    setEnterprise = e => {
-        this.setState({
-            entreprise: {
-                ...this.state.entreprise,
-                [e.target.name]: e.target.value,
-            },
-        })
-    }
-
-    setCoach = e => {
-        this.setState({
-            coach: {
-                ...this.state.coach,
-                [e.target.name]: e.target.value,
-            },
-        })
-    }
-
     renderProfile = () => {
-        const { member } = this.state
+        const { member, message, coach, file } = this.state
         const phone = member.phone ? member.phone : '(+33)'
         const avatar = member.avatar ? member.avatar.slice(6) : null
-
 
         return (
             <div className='animated-tab'>
@@ -391,22 +398,27 @@ class Member extends React.Component {
                                     onClick={this.fileUpload}
                                 />
 
-                                {!this.state.message ? null : (
-                                    <Message compact info>
+                                {message ? (
+                                    <Message info compact>
                                         {this.state.message}
                                     </Message>
-                                )}
+                                ) : null}
                             </Form>
                         </Item.Extra>
                     </Item.Content>
                 </Item>
 
                 <Item>
-                    <Item.Content style={{padding:'1rem'}}>
-                        <Button icon='world' labelPosition='left' onClick={() => Router.push(`/profile/${this.state.coach._id}`)} content='Voir profil public' />
+                    <Item.Content style={{ padding: '1rem' }}>
+                        <Button
+                            icon='world'
+                            labelPosition='left'
+                            onClick={() => Router.push(`/profile/${coach._id}`)}
+                            content='Voir profil public'
+                        />
                     </Item.Content>
                 </Item>
-                                    
+
                 <Header> Vos coordonnées </Header>
 
                 <Item>
@@ -509,7 +521,7 @@ class Member extends React.Component {
 
                 <Segment placeholder className='task-box'>
                     <List divided verticalAlign='middle'>
-                        {this.state.competences.map((categorie, index) => {
+                        {this.state.competence.map((categorie, index) => {
                             return (
                                 <List.Item key={index} className='task'>
                                     <List.Content floated='right'>
@@ -555,7 +567,8 @@ class Member extends React.Component {
                         <Input
                             iconPosition='left'
                             type='date'
-                            label='Date de naissance'
+                            label={{ tag: true, content: 'Date de naissance' }}
+                            labelPosition='right'
                             value={moment(member.dateNaissance).format(
                                 'YYYY-MM-DD'
                             )}
@@ -568,7 +581,8 @@ class Member extends React.Component {
 
                         <Input
                             iconPosition='left'
-                            label='Nationalité'
+                            label={{ tag: true, content: 'Nationalité' }}
+                            labelPosition='right'
                             value={member.nationalite}
                             size='large'
                             onChange={this.updateMember}
@@ -581,18 +595,32 @@ class Member extends React.Component {
 
                 <Item>
                     <Header>Informations sur l'entreprise</Header>
-                    <Item.Header as='h5'>Données de l'entreprise</Item.Header>
                     <Item.Header as='p'>
                         Renseigne ci-dessous les informations et documents
                         légaux relatifs à ton entreprise
                     </Item.Header>
+                    <Input
+                        iconPosition='left'
+                        label={{ tag: true, content: 'Siret' }}
+                        labelPosition='right'
+                        type='number'
+                        value={entreprise.siret}
+                        size='large'
+                        className='spaceMargin'
+                        placeholder='542 256 655 000 23'
+                        name='siret'
+                        onChange={this.setEnterprise}
+                        onBlur={this.submitEntreprise}
+                    />
 
                     <Form.Group widths='equal'>
                         <Input
                             iconPosition='left'
-                            label='Forme juridique'
+                            label={{ tag: true, content: 'Forme juridique' }}
+                            labelPosition='right'
                             value={entreprise.statutJuridique}
                             size='large'
+                            placeholder='sarl'
                             className='spaceMargin'
                             name='statutJuridique'
                             onChange={this.setEnterprise}
@@ -601,9 +629,11 @@ class Member extends React.Component {
 
                         <Input
                             iconPosition='left'
-                            label='Dénomination'
+                            label={{ tag: true, content: 'Dénomination' }}
+                            labelPosition='right'
                             value={entreprise.raisonSociale}
                             size='large'
+                            placeholder='Raison sociale'
                             onChange={this.setEnterprise}
                             onBlur={this.submitEntreprise}
                             name='raisonSociale'
@@ -613,9 +643,11 @@ class Member extends React.Component {
                     <Form.Group widths='equal'>
                         <Input
                             iconPosition='left'
-                            label='Adresse'
+                            label={{ tag: true, content: 'Adresse' }}
+                            labelPosition='right'
                             value={entreprise.siegeSocial}
                             size='large'
+                            placeholder='10 rue Jean Jaures'
                             className='spaceMargin'
                             name='siegeSocial'
                             onChange={this.setEnterprise}
@@ -624,9 +656,11 @@ class Member extends React.Component {
 
                         <Input
                             iconPosition='left'
-                            label='Code postal'
+                            label={{ tag: true, content: 'Code postal' }}
+                            labelPosition='right'
                             value={entreprise.codePostal}
                             size='large'
+                            placeholder='13000'
                             onChange={this.setEnterprise}
                             onBlur={this.submitEntreprise}
                             name='codePostal'
@@ -636,9 +670,11 @@ class Member extends React.Component {
                     <Form.Group widths='equal'>
                         <Input
                             iconPosition='left'
-                            label='Pays'
+                            label={{ tag: true, content: 'Pays' }}
+                            labelPosition='right'
                             value={entreprise.pays}
                             size='large'
+                            placeholder='France'
                             className='spaceMargin'
                             name='pays'
                             onChange={this.setEnterprise}
@@ -647,9 +683,11 @@ class Member extends React.Component {
 
                         <Input
                             iconPosition='left'
-                            label='Ville'
+                            label={{ tag: true, content: 'Ville' }}
+                            labelPosition='right'
                             value={entreprise.ville}
                             size='large'
+                            placeholder='Marseille'
                             onChange={this.setEnterprise}
                             onBlur={this.submitEntreprise}
                             name='ville'
@@ -663,25 +701,9 @@ class Member extends React.Component {
 
     //verif method searchbar pour update state array de competences
 
-    handleDelete = categorie => {
-        if (this.state.competences.length === 1) {
-            this.setState({ competences: [] })
-        } else {
-            let newtab = this.state.competences.filter(comp => {
-                return comp !== categorie
-            })
-            this.setState(
-                {
-                    competences: newtab,
-                },
-                () => this.submitCoach()
-            )
-        }
-    }
-
     render() {
         console.log(this.state.member)
-        console.log(this.state.competences)
+        console.log(this.state.competence)
         console.log(this.state.coach)
 
         return (

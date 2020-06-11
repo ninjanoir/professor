@@ -25,6 +25,8 @@ app.prepare()
         const memberPlace = require('../routes/userSpace')
         const entreprise = require('../routes/entreprises')
         const newsletter = require('../routes/newsletter')
+        const postsRoute = require('../routes/posts')
+        const contactMailer = require('../routes/contact')
         const cookieParser = require('cookie-parser')
 
         server.use(bodyParser.urlencoded({ extended: true }))
@@ -39,6 +41,8 @@ app.prepare()
         server.use('/api/categorie', categorie)
         server.use('/api/pros', entreprise)
         server.use('/api/subscribe', newsletter)
+        server.use('/api/posts', postsRoute)
+        server.use('/api/mailer', contactMailer)
         server.use('/api/upload', express.static('./public/uploads'))
 
         server.all('*', (req, res) => {

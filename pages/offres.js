@@ -8,8 +8,8 @@ const Offers = ({ free, prenium, gold }) => {
 
     return (
         <div className="page_wrapper">
-        <Header as="h1" className="centered">
-            Try for free
+        <Header as="h1" className="centered brand">
+            Be Free !
         </Header>
 
         <Grid centered stackable>
@@ -17,7 +17,7 @@ const Offers = ({ free, prenium, gold }) => {
             <Card
                 centered
                 header="Free"
-                meta="testez coachs for you"
+                meta="Compte gratuit"
                 description={<ListOffers items={free} />}
                 extra={
                 <Button onClick={()=> router.push(`/register`)} className="centered" icon labelPosition="left">
@@ -32,7 +32,7 @@ const Offers = ({ free, prenium, gold }) => {
             <Card
                 centered
                 header="Prenium"
-                meta="Coachez 5 membres Max"
+                meta="5 contacts max"
                 description={<ListOffers items={prenium} />}
                 extra={
                     <Button onClick={()=> router.push(`/register`)} className="centered" icon labelPosition="left">
@@ -47,7 +47,7 @@ const Offers = ({ free, prenium, gold }) => {
             <Card
                 centered
                 header="Gold"
-                meta="Coachez en Illimité"
+                meta="Contacts illimités"
                 description={<ListOffers items={gold} />}
                 extra={
                     <Button onClick={()=> router.push(`/register`)} className="centered" icon labelPosition="left">
@@ -66,11 +66,11 @@ Offers.getInitialProps = () => {
     return {
         free: [
         {
-            title: "Trouver un coach",
+            title: "Découverte",
             
         },
         {
-            title: "Créer son profil",
+            title: "Créer votre profil",
         
         },
         {
@@ -81,29 +81,29 @@ Offers.getInitialProps = () => {
 
         prenium: [
         {
-            title: "Devenir Coach",
+            title: "Coacher 5 membres",
             
         },
         {
-            title: "Créer son profil",
+            title: "Partager votre profil",
             
         },
         {
-            title: "5 membres Max",
+            title: "5 contacts Max",
             
         },
         ],
         gold: [
         {
-            title: "Devenir coach",
+            title: "Coacher illimité",
             
         },
         {
-            title: "Créer son profil",
+            title: "Partager votre profil",
             
         },
         {
-            title: "Coachez en illimité",
+            title: "Contacts illimités",
             
         },
         ],

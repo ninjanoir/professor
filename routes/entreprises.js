@@ -13,11 +13,10 @@ router.post(
         const memberId = req.member._id
 
 
-        const  error  = validate({ membre: req.member._id })
-        console.log('error:', error)
+        const  error  = validate({ membreId: req.member._id })
         if (error) return res.status(400).send(error.details[0].message)
 
-        Entreprise.findOne({ membre: memberId }, (err, isregistered) => {
+        Entreprise.findOne({ membreId: memberId }, (err, isregistered) => {
             if (err) return console.error(err)
             if (isregistered) {
                 return res
@@ -36,7 +35,7 @@ router.post(
 
         const newEntreprise = new Entreprise({
             ...update,
-            membre: memberId,
+            membreId: memberId,
         })
 
         await newEntreprise.save()
@@ -56,7 +55,7 @@ router.put(
         }
 
         const entreprise = await Entreprise.findOneAndUpdate(
-            {membre: req.member._id},
+            {membreId: req.member._id},
             update
         ).select('-password -__v -createAt -confirmed -_id')
 

@@ -15,8 +15,8 @@ export default class Searchbar extends React.Component {
 
     render() {
         return (
-            <Grid className='recentered'>
-                <Grid.Column width={2} style={{ margin: 'auto' }}>
+            <Grid>
+                <Grid.Column width={3} className='_search'>
                     <Search
                         onResultSelect={this.handleResultSelect}
                         onSearchChange={this.handleChange}

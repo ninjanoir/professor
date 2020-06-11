@@ -6,12 +6,14 @@ const coachSchema = new mongoose.Schema({
     membre: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Member',
-        //unique: [true, 'membre dejà coach'],
+        unique: true,
     },
-    competence: [{
-        icon: String,
-        nom: String
-    }],
+    competence: [
+        {
+            icon: String,
+            nom: String,
+        },
+    ],
     meta: {
         type: String,
         trim: true,
@@ -32,12 +34,12 @@ const coachSchema = new mongoose.Schema({
     },
 })
 
-const validateCoach = member => {
+const validateCoach = coach => {
     const schema = Joi.object({
         membre: Joi.objectId().required(),
     })
 
-    return schema.validate(member)
+    return schema.validate(coach)
 }
 
 exports.Coach = mongoose.models.Coach || mongoose.model('Coach', coachSchema)

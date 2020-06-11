@@ -9,8 +9,7 @@ const entrepriseShema = new mongoose.Schema({
     },
     siret: {
         type: Number,
-        min: 9,
-        max: 14,
+        min: 0,
         trim: true,
         unique: true
     },
@@ -44,7 +43,7 @@ const entrepriseShema = new mongoose.Schema({
 
 const validateEntreprise = entreprise => {
     const schema = Joi.object({
-        membre: Joi.objectId().required(),
+        membreId: Joi.objectId().required(),
     })
 
     schema.validate(entreprise)

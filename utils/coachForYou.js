@@ -1,7 +1,7 @@
 import axios from 'axios'
 import getConfig from 'next/config'
 
-const { serverRuntimeConfig, publicRuntimeConfig } = getConfig()
+const {publicRuntimeConfig } = getConfig()
 
 
 export default axios.create({

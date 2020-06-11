@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react'
 import { Menu, Button, Icon, Dropdown } from 'semantic-ui-react'
 import Cookies from 'js-cookie'
@@ -13,23 +12,31 @@ const Navbar = () => {
     const getInOrOut = () => {
         const token = Cookies.get('x-auth-token')
         if (!token) {
-            router.push('/login')
+            router.replace('/login')
         } else {
             setIsloggIn(false)
             Cookies.remove('x-auth-token')
-            router.push('/login')
+            router.replace('/login')
         }
     }
 
     const updateDimension = () => {
         setWidthOfWindow(window.innerWidth)
-        console.log(window.innerWidth)
     }
 
     const renderMobileMenu = () => {
         return (
-            <Dropdown className='right' item  icon={isloggIn? 'user circle outline' :'sidebar'}>
+            <Dropdown
+                className='right'
+                item
+                style={{fontSize: '1.1rem'}}
+                icon={isloggIn ? 'user circle outline' : 'sidebar'}>
                 <Dropdown.Menu>
+                    {isloggIn ? (
+                        <Menu.Item onClick={() => router.push('/member')}>
+                            Espace membre
+                        </Menu.Item>
+                    ) : null}
                     <Dropdown.Item onClick={() => router.push('/about')}>
                         A propos
                     </Dropdown.Item>
@@ -61,6 +68,12 @@ const Navbar = () => {
                     Contact
                 </Menu.Item>
 
+                {isloggIn ? (
+                    <Menu.Item onClick={() => router.push('/member')}>
+                        Espace membre
+                    </Menu.Item>
+                ) : null}
+
                 <Menu.Item onClick={getInOrOut}>
                     <Button
                         icon
@@ -84,14 +97,14 @@ const Navbar = () => {
             setIsloggIn(false)
 
             if (router.route === '/member') {
-                router.push('/login')
+                router.replace('/login')
             }
         }
 
         if (token && !isloggIn) {
             setIsloggIn(true)
             if (router.route === '/login' || router.route === '/register') {
-                router.push('/member')
+                router.replace('/member')
             }
         }
 
@@ -102,22 +115,18 @@ const Navbar = () => {
 
     return (
         <Menu secondary className='yellow inverted fixed'>
-            <Menu.Item className='ui header logo' onClick={()=> router.push('/')}>
-
-                    COACHS FOR YOU
-
+            <Menu.Item
+                className='ui header logo'
+                onClick={() => router.push('/')}>
+                COACHS FOR YOU
             </Menu.Item>
-            <Dropdown text='Nos coachs' className='link pointing item icon'>
+            <Dropdown style={{fontSize: '1.1rem'}} text='Be Coach' className='link pointing item icon'>
                 <Dropdown.Menu>
-                    <Menu.Item onClick={()=> router.push('/offres')}>
-                        
-                            Try for free
-                        
+                    <Menu.Item onClick={() => router.push('/offres')}>
+                        Free Test
                     </Menu.Item>
-                    <Menu.Item onClick={()=> router.push('/search')}>
-                        
-                            Recherche coach
-                        
+                    <Menu.Item onClick={() => router.push('/search')}>
+                        Coachs Online
                     </Menu.Item>
                 </Dropdown.Menu>
             </Dropdown>

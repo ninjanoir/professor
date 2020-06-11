@@ -108,7 +108,7 @@ const User = () => {
             coachForYou
                 .post('/register', { nom, prenom, compte, email, password })
                 .then(response => {
-                    console.log(response)
+
                     if (response.data.success) {                  
                         router.push('/login')
                     }
@@ -121,7 +121,7 @@ const User = () => {
 
 
     useEffect(() => {
-        if(Cookies.get('x-auth-token')) { return router.push('/member')}
+        if(Cookies.get('x-auth-token')) { return router.replace('/member')}
         return () => {
             
         }
@@ -129,7 +129,7 @@ const User = () => {
 
     return (
         <Form onSubmit={handleSubmit} className='page_wrapper form_style'>
-            <Header className='spacer'>Enregistrer un compte</Header>
+            <Header className='spacer brand'>Devenir membre</Header>
             <Form.Group>
                 <Form.Checkbox
                     error={errors.compte ? errors.compte : false}
