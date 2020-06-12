@@ -60,8 +60,9 @@ const memberSchema = new mongoose.Schema({
 })
 
 //method generate user token
+const SECRET = process.env.SECRET || config.get('jwtPrivateKey')
 memberSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id }, config.get('jwtPrivateKey'), {
+    const token = jwt.sign({ _id: this._id }, SECRET, {
         expiresIn: '1h',
     })
     return token
