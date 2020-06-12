@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { Menu, Button, Icon, Dropdown } from 'semantic-ui-react'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
-//TODO: make loggIn menu component
+
 
 const Navbar = () => {
     const router = useRouter()

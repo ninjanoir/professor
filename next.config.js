@@ -7,19 +7,13 @@ const DOMAIN =
 
 module.exports = {
     serverRuntimeConfig: {
-
         SECRET: process.env.SECRET || config.get('jwtPrivateKey'),
         MAILBOX: process.env.MAILBOX || config.get('MAILBOX'),
-        PASSWORD:  process.env.PASSWORD || config.get('PASSWORD'),
+        PASSWORD: process.env.PASSWORD || config.get('PASSWORD'),
         USER: process.env.USER || config.get('USER'),
         HOSTSMTP: process.env.HOSTSMTP || config.get('HOSTSMTP'),
-        
-
-
     },
     publicRuntimeConfig: {
-
-        DOMAIN: DOMAIN
-
+        DOMAIN: DOMAIN,
     },
 }
