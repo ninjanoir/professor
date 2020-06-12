@@ -19,6 +19,8 @@ class Index extends React.Component {
     constructor(props) {
         super(props)
 
+        console.log('constructor lyfeCylce')
+
         this.state = {
             totalPages: 0,
             posts: this.props.data,
@@ -36,6 +38,8 @@ class Index extends React.Component {
         )
         this.setState({ totalPages: totalPages })
         this.getCurrentPage(this.state.currentPage)
+
+
     }
 
     handleShow = e => {
@@ -52,11 +56,11 @@ class Index extends React.Component {
     }
 
     renderContent = coach => {
-
-        
-
         const content = (
-            <Button animated='fade' inverted onClick={() => Router.push(`/profile/${coach.coach._id}`)} >
+            <Button
+                animated='fade'
+                inverted
+                onClick={() => Router.push(`/profile/${coach.coach._id}`)}>
                 <Button.Content visible>Visitez ce coach</Button.Content>
                 <Button.Content hidden>Disponible</Button.Content>
             </Button>
@@ -87,7 +91,6 @@ class Index extends React.Component {
 
     render() {
         const { currentPosts } = this.state
-        console.log(currentPosts)
 
         if (!currentPosts) {
             return <div>Chargement...</div>
@@ -189,7 +192,7 @@ Index.getInitialProps = async () => {
         .catch(e => console.error('fetch coach index failed', e))
     const data = res.data.response
 
-    console.log(data)
+    console.log('SSR------------------------------index', data)
 
     return { data }
 }

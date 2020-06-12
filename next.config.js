@@ -6,6 +6,18 @@ const DOMAIN =
         : process.env.VERCEL_URL
 
 module.exports = {
+    webpack: (config, { isServer }) => {
+        if (!isServer) {
+            config.node = {
+                fs: 'empty',
+            }
+        }
+
+        return config
+    },
+
+    pageExtensions: ['mdx', 'jsx', 'js', 'ts', 'tsx'],
+
     serverRuntimeConfig: {
         SECRET: process.env.SECRET || config.get('jwtPrivateKey'),
         MAILBOX: process.env.MAILBOX || config.get('MAILBOX'),
