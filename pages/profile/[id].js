@@ -1,6 +1,6 @@
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
-import getConfig from 'next/config'
+
 import {
     Responsive,
     Grid,
@@ -25,10 +25,7 @@ import Cookies from 'js-cookie'
 
 import jwt from 'jsonwebtoken'
 
-const {publicRuntimeConfig } = getConfig()
 
-//----------------------------------------------------------Variable env
-console.log('domain', publicRuntimeConfig.DOMAIN)
 
 //--------------------------------------------------------------------------------------Debut du component--------->
 const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
@@ -513,6 +510,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
 export async function getServerSideProps({ query }) {
     const res = await coachForYou.get(`/posts/${query.id}`)
     const data = await res.data
+
 
     return { props: { data } }
 }

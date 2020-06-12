@@ -11,13 +11,14 @@ router.post(
         const { error } = validate(req.body)
         if (error) return res.status(400).send(error.details[0].message)
 
-        let member = await Member.findOne({ email: req.body.email }).catch(e => console.error('find member failed---', e))
+        let member = await Member.findOne({ email: req.body.email }).catch(e =>
+            console.error('find member failed---', e)
+        )
         if (!member) res.status(400).send('email ou mot passe invalide')
 
-        const validPassword = await bcrypt.compare(
-            req.body.password,
-            member.password
-        ).catch(e => console.error('compare password failed', e))
+        const validPassword = await bcrypt
+            .compare(req.body.password, member.password)
+            .catch(e => console.error('compare password failed', e))
         if (!validPassword)
             return res.status(400).send('email ou mot de passe invalide')
 

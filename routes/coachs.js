@@ -23,7 +23,9 @@ router.get(
             for (let i = 0; i < coachs.length; i++) {
                 let avatar = await Avatar.findOne({
                     membre: coachs[i].membre._id,
-                }).select('avatar').catch(e => console.error('avatar fetch failed---', e))
+                })
+                    .select('avatar')
+                    .catch(e => console.error('avatar fetch failed---', e))
 
                 let coach = coachs[i]
 
