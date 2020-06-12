@@ -2,7 +2,7 @@ const next = require('next')
 const config = require('config')
 const db = require('../utils/dbConnect')
 
-let URI = process.env.MONGO_URI || config.get('MONGO_URI')
+const URI = process.env.MONGO_URI || config.get('MONGO_URI')
 
 db(URI)
 
