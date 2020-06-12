@@ -10,7 +10,7 @@ function Admin() {
 
         if(state.nom && state.icon){
             console.log(state)
-            axios.post('http://localhost:5000/api/categorie', state).then(res => {
+            axios.post(`${process.env.DOMAIN}/api/categorie`, state).then(res => {
                 if (res.data.success) {
                     alert('new cat', res.data)
                 }
