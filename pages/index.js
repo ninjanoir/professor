@@ -90,7 +90,7 @@ class Index extends React.Component {
 
     render() {
         const { currentPosts } = this.state
-
+        console.log('SECRET',process.env.SECRET)
 
 
         if (!currentPosts) {
@@ -192,7 +192,6 @@ Index.getInitialProps = async () => {
         .get('/coach')
         .catch(e => console.error('fetch coach index failed', e))
     const data = res.data.response
-
 
 
     return { data }

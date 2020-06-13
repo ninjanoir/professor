@@ -24,6 +24,8 @@ module.exports = {
         MONGO_URI: process.env.MONGO_URI,
     },
     publicRuntimeConfig: {
-        API_ENDPOINT: `${process.env.LOCALHOST}:${process.env.PORT}/api` || `${process.env.HEROKU}/api`,
+        API_ENDPOINT: `${process.env.LOCALHOST}:${process.env.PORT}/api`,
+        API_PROD: 'https://coach-for-you.herokuapp.com/api'
+
     },
 }
