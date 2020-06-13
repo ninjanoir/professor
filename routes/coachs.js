@@ -112,6 +112,7 @@ router.get(
         })
             .populate('membre', 'nom prenom ')
             .select('-competence -createdAt -__v')
+            .catch(e => console.error('coach by slug failed', e))
 
         let response = []
 

@@ -7,7 +7,7 @@ const Comments = ({user, comment, src}) => {
             <Feed.Label image={src} />
             <Feed.Content>
                 <Feed.Summary>
-                    <a>{user}</a> posté un commentaire
+                    <a>{user}</a> a posté un commentaire
                 </Feed.Summary>
                 <Feed.Extra text>
                     {comment}

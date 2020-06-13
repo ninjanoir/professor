@@ -276,8 +276,6 @@ class Member extends React.Component {
     fileChange = e => {
         e.stopPropagation()
 
-        console.log('file change scope--------member avatar id',this.state.member)
-
         this.setState({ file: e.target.files[0] }, () =>
             this.setState({ message: this.state.file.name })
         )
@@ -285,8 +283,6 @@ class Member extends React.Component {
 
     fileUpload = () => {
         let form = new FormData()
-
-        
 
         const { file, member } = this.state
         const headers = {
@@ -702,10 +698,6 @@ class Member extends React.Component {
     //verif method searchbar pour update state array de competences
 
     render() {
-        console.log(this.state.member)
-        console.log(this.state.competence)
-        console.log(this.state.coach)
-
         return (
             <div style={{ padding: '7rem' }}>
                 <Item.Group relaxed>

@@ -22,6 +22,7 @@ router.post(
 
         let response = await mailer(req.body).catch(e => console.error('mailer failed------', e))
 
+
         if(response.rejected.length === 0){
             res.status(200).json({success: true})
         }

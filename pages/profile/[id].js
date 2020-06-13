@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router'
+
 import { useState, useEffect } from 'react'
 
 import {
@@ -30,10 +30,7 @@ import jwt from 'jsonwebtoken'
 //--------------------------------------------------------------------------------------Debut du component--------->
 const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
 
-    // -------router --------
-    const router = useRouter()
 
-    //------------IsAdmin-------
     const [isAdmin, setIsAdmin] = useState('')
 
     const verifToken = token => {
@@ -45,13 +42,20 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
     //------------autoComplete searchbar--------------
     const [options, setOptions] = useState(profil.competence)
 
-    //--------------POST--------------------------
     const [posts, setPosts] = useState(coachPost)
 
     //-------------POST Textearea-----------------
+
     const [info, setInfo] = useState('')
 
+    const [errors, setErrors] = useState({})
+
+    const [form, setForm] = useState({})
+
+    const [response, setResponse] = useState('')
+
     //--------------form VIDEO---------------
+
     const [form2, setForm2] = useState({})
 
     const validateTextArea = () => {
@@ -64,8 +68,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
         return err
     }
 
-    //construite header profile info sous form de Card
-
+    //---------------------------------Sumit Post
     const handleSubmit = () => {
         let err = validateTextArea()
 
@@ -77,14 +80,13 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
                 })
                 .then(res => {
                     if (res.data.success) {
-
                         setPosts([...posts, res.data.result])
                     } else {
                         console.log('post echoué...')
                     }
                 })
                 .catch(e => {
-                    console.log('post failed--',e)
+                    console.log('post failed--', e)
                 })
 
             setInfo('')
@@ -93,8 +95,6 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
         }
     }
 
-    //state TextArea
-
     const handleTextArea = e => {
         setInfo(e.target.value)
         setErrors({
@@ -102,13 +102,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
         })
     }
 
-    const [errors, setErrors] = useState({})
-
-    const [form, setForm] = useState({})
-
-    const [response, setResponse] = useState('')
-
-    //-----------------Modals-----------------------
+    //---------------------------------------Modals
     const [open, setOpen] = useState(false)
     const [open2, setOpen2] = useState(false)
 
@@ -120,7 +114,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
         setOpen2(false)
     }
 
-    //---------------handleForm Contact-------------
+    //-----------------------------handleForm Contact
 
     const validateFormContact = () => {
         let err = {}
@@ -195,11 +189,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
                                     label='prenom et nom'
                                     placeholder='John Doe'
                                     onChange={handleForm}
-                                    error={
-                                        errors.nom
-                                            ? errors.nom
-                                            : null
-                                    }
+                                    error={errors.nom ? errors.nom : null}
                                     value={form.nom}
                                 />
                             </Form.Field>
@@ -246,7 +236,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
         )
     }
 
-    //--------------------Modal Post Video-------------------------------------
+    //-------------------------------------------Modal Post Video
     const validateFormVideo = () => {
         let err = {}
 
@@ -267,12 +257,17 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
         if (Object.values(err).length === 0) {
             setPosts([...posts, form2])
 
-            coachForYou.post('/posts', {
-                coachId: profil._id,
-                ...form2,
-            }).then(res => {
-                if(res.data.success){console.log('video postée avec succes')}
-            }).catch(e => console.error('failed post video', e))
+            coachForYou
+                .post('/posts', {
+                    coachId: profil._id,
+                    ...form2,
+                })
+                .then(res => {
+                    if (res.data.success) {
+                        console.log('video postée avec succes')
+                    }
+                })
+                .catch(e => console.error('failed post video', e))
 
             setForm2({})
             close2()
@@ -348,7 +343,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
         )
     }
 
-    //delete Post
+    //-----------------------------------------------delete Post
     const deletePost = post => {
         coachForYou
             .delete(`/posts/${post._id}`)
@@ -361,12 +356,12 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
                     setPosts(newStatePosts)
                 }
             })
-            .catch(e => console.error('delete post failed-----',e))
+            .catch(e => console.error('delete post failed-----', e))
     }
 
-    //--------------------------presentation de contenu------------------------------
-    const renderPosts = () => {
+    //-------------------------------------------Posts Render
 
+    const renderPosts = () => {
         if (coachPost.length > 0) {
             return posts.map((post, index) => {
                 return (
@@ -407,19 +402,14 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
 
     useEffect(() => {
         if (Cookies.get('x-auth-token')) {
-            console.log('render useEffect-----------------')
+
             let token = Cookies.get('x-auth-token')
 
             let verif = verifToken(token)
 
             setIsAdmin(verif._id)
         } else {
-            console.log('visiteur non authnetifié')
             setIsAdmin('')
-        }
-
-        return () => {
-            console.log('cleanUp useEffect')
         }
     }, [isAdmin])
 
@@ -479,14 +469,21 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
                                         circular
                                         color='google plus'
                                         icon='paper plane'
-                                        disabled={isAdmin === profil.membre._id ? false : true}
-                                        
+                                        disabled={
+                                            isAdmin === profil.membre._id
+                                                ? false
+                                                : true
+                                        }
                                     />
                                     <Button
                                         onClick={() => setOpen2(true)}
                                         circular
                                         icon='video'
-                                        disabled={isAdmin === profil.membre._id ? false : true}
+                                        disabled={
+                                            isAdmin === profil.membre._id
+                                                ? false
+                                                : true
+                                        }
                                     />
                                 </div>
                             </Form.Field>
@@ -508,9 +505,10 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
 }
 
 export async function getServerSideProps({ query }) {
+
+    
     const res = await coachForYou.get(`/posts/${query.id}`)
     const data = await res.data
-
 
     return { props: { data } }
 }

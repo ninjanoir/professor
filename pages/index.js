@@ -15,11 +15,10 @@ import StayTuned from './../components/StayTuned'
 import coachForYou from '../utils/coachForYou'
 import Router from 'next/router'
 
+
 class Index extends React.Component {
     constructor(props) {
         super(props)
-
-        console.log('constructor lyfeCylce')
 
         this.state = {
             totalPages: 0,
@@ -91,6 +90,8 @@ class Index extends React.Component {
 
     render() {
         const { currentPosts } = this.state
+
+
 
         if (!currentPosts) {
             return <div>Chargement...</div>
@@ -192,7 +193,7 @@ Index.getInitialProps = async () => {
         .catch(e => console.error('fetch coach index failed', e))
     const data = res.data.response
 
-    console.log('SSR------------------------------index', data)
+
 
     return { data }
 }

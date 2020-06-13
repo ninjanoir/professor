@@ -1,17 +1,14 @@
 const next = require('next')
-const config = require('config')
 const db = require('../utils/dbConnect')
+require('dotenv').config()
 
-const URI = process.env.MONGO_URI || config.get('MONGO_URI')
-
-
-db(URI)
+db(process.env.MONGO_URI)
 
 
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const port = process.env.PORT || 5000
+const port = process.env.PORT || 3000
 const dev = process.env.NODE_ENV !== 'production'
 
 const app = next({ dev })

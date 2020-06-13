@@ -12,8 +12,7 @@ router.post(
     asyncMiddleware(async (req, res) => {
         const memberId = req.member._id
 
-
-        const  error  = validate({ membreId: req.member._id })
+        const error = validate({ membreId: req.member._id })
         if (error) return res.status(400).send(error.details[0].message)
 
         Entreprise.findOne({ membreId: memberId }, (err, isregistered) => {
@@ -55,9 +54,11 @@ router.put(
         }
 
         const entreprise = await Entreprise.findOneAndUpdate(
-            {membreId: req.member._id},
+            { membreId: req.member._id },
             update
-        ).select('-password -__v -createAt -confirmed -_id')
+        )
+            .select('-password -__v -createAt -confirmed -_id')
+            .catch(e => console.error('update entreprise failed--', e))
 
         if (!entreprise)
             return res.status(400).send('aucune entreprise ne correspond')

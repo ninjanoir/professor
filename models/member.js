@@ -1,7 +1,8 @@
 const mongoose = require('mongoose')
 const Joi = require('@hapi/joi')
 const jwt = require('jsonwebtoken')
-const config = require('config')
+
+const { serverRuntimeConfig } = require('../next.config')
 
 const memberSchema = new mongoose.Schema({
     prenom: {
@@ -60,9 +61,9 @@ const memberSchema = new mongoose.Schema({
 })
 
 //method generate user token
-const SECRET = process.env.SECRET || config.get('jwtPrivateKey')
+
 memberSchema.methods.generateAuthToken = function () {
-    const token = jwt.sign({ _id: this._id }, SECRET, {
+    const token = jwt.sign({ _id: this._id }, serverRuntimeConfig.SECRET, {
         expiresIn: '1h',
     })
     return token

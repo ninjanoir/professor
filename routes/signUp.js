@@ -8,12 +8,13 @@ const bcrypt = require('bcrypt')
 router.post(
     '/',
     asyncMiddleware(async (req, res) => {
-
         const { error } = validate(req.body)
 
         if (error) return res.status(400).send(error.details[0].message)
 
-        let member = await Member.findOne({ email: req.body.email })
+        let member = await Member.findOne({ email: req.body.email }).catch(e =>
+            console.error('memner fetched failed--', e)
+        )
         if (member)
             return res
                 .status(400)

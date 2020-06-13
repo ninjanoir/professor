@@ -29,11 +29,6 @@ router.put(
     '/:id',
     [auth, upload.single('avatar')],
     asyncMiddleware(async (req, res) => {
-        
-        console.log('update avatar req------------',req.file)
-
-        // use fs to remove the ancient avatar
-
         const { error } = validate(req.file)
         if (error) return res.status(400).send(error.details[0].message)
 

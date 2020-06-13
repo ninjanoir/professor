@@ -1,16 +1,11 @@
 import axios from 'axios'
+require('dotenv').config()
 
 import getConfig from 'next/config'
 
-const { publicRuntimeConfig } = getConfig()
 
-const URL =
-    process.env.NODE_ENV !== 'production'
-        ? `${publicRuntimeConfig.DOMAIN}/api`
-        : `${process.env.VERCEL_URL}/api`
-
-console.log(URL)
+const {publicRuntimeConfig} =getConfig()
 
 export default axios.create({
-    baseURL: URL,
+    baseURL: publicRuntimeConfig.API_ENDPOINT
 })

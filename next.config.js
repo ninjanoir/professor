@@ -1,9 +1,5 @@
-const config = require('config')
+require('dotenv').config()
 
-const DOMAIN =
-    process.env.NODE_ENV !== 'production'
-        ? config.get('LOCALHOST')
-        : process.env.VERCEL_URL
 
 module.exports = {
     webpack: (config, { isServer }) => {
@@ -19,13 +15,15 @@ module.exports = {
     pageExtensions: ['mdx', 'jsx', 'js', 'ts', 'tsx'],
 
     serverRuntimeConfig: {
-        SECRET: process.env.SECRET || config.get('jwtPrivateKey'),
-        MAILBOX: process.env.MAILBOX || config.get('MAILBOX'),
-        PASSWORD: process.env.PASSWORD || config.get('PASSWORD'),
-        USER: process.env.USER || config.get('USER'),
-        HOSTSMTP: process.env.HOSTSMTP || config.get('HOSTSMTP'),
+        SECRET: process.env.SECRET,
+        MAILBOX: process.env.MAILBOX,
+        PASSWORD: process.env.PASSWORD,
+        USER: process.env.USER,
+        HOSTSMTP: process.env.HOSTSMTP,
+        HOSTPORT: process.env.HOSTPORT,
+        MONGO_URI: process.env.MONGO_URI,
     },
     publicRuntimeConfig: {
-        DOMAIN: DOMAIN,
+        API_ENDPOINT: `${process.env.LOCALHOST}:${process.env.PORT}/api` || `${process.env.VERCEL_URL}/api`,
     },
 }

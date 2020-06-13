@@ -7,7 +7,6 @@ const asyncMiddleware = require('../middleware/async')
 router.post(
     '/',
     asyncMiddleware(async (req, res) => {
-
         console.log(req.body)
         const { error } = validate(req.body)
         if (error) return status(400).send(error.details[0].message)
@@ -16,7 +15,7 @@ router.post(
 
         await email.save()
 
-        res.status(200).json({success: true})
+        res.status(200).json({ success: true })
     })
 )
 
