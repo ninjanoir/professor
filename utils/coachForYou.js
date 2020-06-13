@@ -9,8 +9,6 @@ const baseURL =
         ? process.env.API_PROD
         : publicRuntimeConfig.API_ENDPOINT
 
-        console.log(baseURL)
-
 export default axios.create({
     baseURL,
 })

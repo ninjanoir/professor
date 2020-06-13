@@ -219,9 +219,7 @@ const Categorie = ({ coachs, avatar }) => {
                                                 onMouseLeave={handleHide}
                                                 src={
                                                     coach.avatar
-                                                        ? coach.avatar.avatar.slice(
-                                                              6
-                                                          )
+                                                        ? coach.avatar.avatar.slice(6)
                                                         : 'https://cdn.pixabay.com/photo/2020/05/24/22/03/vendetta-5216423_960_720.jpg'
                                                 }
                                                 size='medium'
