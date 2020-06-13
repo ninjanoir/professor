@@ -8,7 +8,7 @@ db(process.env.MONGO_URI)
 const express = require('express')
 const bodyParser = require('body-parser')
 
-const port = process.env.PORT || 3000
+const port = process.env.PORT || 8000
 const dev = process.env.NODE_ENV !== 'production'
 
 const app = next({ dev })
