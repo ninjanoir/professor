@@ -3,9 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env NODE_ENV=development nodemon server/index.js",
+    "dev": "cross-env NODE_ENV=development nodemon -r dotenv/config server/index.js",
     "build": "next build",
-    "start": "cross-env NODE_ENV=production next start"
+    "start": "cross-env NODE_ENV=production -r dotenv/config next start"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",

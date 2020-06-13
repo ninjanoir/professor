@@ -1,6 +1,6 @@
 const next = require('next')
 const db = require('../utils/dbConnect')
-require('dotenv').config()
+
 
 db(process.env.MONGO_URI)
 
