@@ -90,7 +90,6 @@ class Index extends React.Component {
 
     render() {
         const { currentPosts } = this.state
-        console.log('SECRET',process.env.SECRET)
 
 
         if (!currentPosts) {

@@ -36,7 +36,6 @@ const Search = ({ coachs }) => {
 
     const [state, setState] = useState(initialState)
 
-    //------resultat serch bar-----------------------
     const [options, setOptions] = useState([])
 
     const cardRef = useRef()
@@ -107,7 +106,7 @@ const Search = ({ coachs }) => {
     }
 
     const handleHide = e => {
-        if (cardRef.current !== null) {
+        if (cardRef.current !== null || cardRef.current !== undefined) {
             cardRef.current.className = 'ui dimmer'
         } else {
             return
