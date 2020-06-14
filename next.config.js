@@ -14,7 +14,6 @@ module.exports = {
 
     pageExtensions: ['mdx', 'jsx', 'js', 'ts', 'tsx'],
 
-    target: 'serverless',
 
     serverRuntimeConfig: {
         SECRET: process.env.SECRET,
