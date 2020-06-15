@@ -26,7 +26,7 @@ module.exports = {
     },
     publicRuntimeConfig: {
         API_ENDPOINT: `${process.env.LOCALHOST}:${process.env.PORT}/api`,
-        API_PROD: 'https://coach-for-you.herokuapp.com/api'
+        API_PROD: process.env.API_PROD
 
     },
 }
