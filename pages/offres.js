@@ -1,9 +1,21 @@
 import { Header, Grid, Card, Icon, Button } from 'semantic-ui-react'
 import ListOffers from './../components/ListOffers'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
+import Cookies from 'js-cookie'
 
 const Offers = ({ free, prenium, gold }) => {
     const router = useRouter()
+
+    const [isLog, setIsLog] = useState(false)
+
+    useEffect(() => {
+        if (Cookies.get('x-auth-token') !== undefined) {
+            setIsLog(true)
+        } else {
+            setIsLog(false)
+        }
+    }, [isLog])
 
     return (
         <div className='page_wrapper'>
@@ -20,7 +32,11 @@ const Offers = ({ free, prenium, gold }) => {
                         description={<ListOffers items={free} />}
                         extra={
                             <Button
-                                onClick={() => router.push(`/register`)}
+                                onClick={
+                                    isLog
+                                        ? () => router.push('/member')
+                                        : () => router.push('/register')
+                                }
                                 className='centered'
                                 icon
                                 labelPosition='left'>
@@ -39,7 +55,11 @@ const Offers = ({ free, prenium, gold }) => {
                         description={<ListOffers items={prenium} />}
                         extra={
                             <Button
-                                onClick={() => router.push(`/register`)}
+                                onClick={
+                                    isLog
+                                        ? () => router.push('/member')
+                                        : () => router.push('/register')
+                                }
                                 className='centered'
                                 icon
                                 labelPosition='left'>
@@ -58,7 +78,11 @@ const Offers = ({ free, prenium, gold }) => {
                         description={<ListOffers items={gold} />}
                         extra={
                             <Button
-                                onClick={() => router.push(`/register`)}
+                                onClick={
+                                    isLog
+                                        ? () => router.push('/member')
+                                        : () => router.push('/register')
+                                }
                                 className='centered'
                                 icon
                                 labelPosition='left'>
