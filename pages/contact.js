@@ -75,6 +75,8 @@ export default class Contact extends React.Component {
             <div className='page_wrapper ui container'>
                 <h1 className='ui header brand'>Contactez nous</h1>
 
+                {message ? this.renderInfo() : null}
+
                 <Form onSubmit={this.onSubmit}>
                     {info ? this.renderInfo() : null}
                     <Form.Field>
