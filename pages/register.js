@@ -106,7 +106,7 @@ const User = () => {
 
         try {
             coachForYou
-                .post('/register', { nom, prenom, compte, email, password })
+                .post('/api/register', { nom, prenom, compte, email, password })
                 .then(response => {
 
                     if (response.data.success) {                  
