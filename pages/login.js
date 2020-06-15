@@ -1,11 +1,10 @@
 import { Form, Grid, Segment, Button, Divider, Icon } from 'semantic-ui-react'
-import {useRouter} from 'next/router'
+import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import coachForYou from '../utils/coachForYou'
 import Cookies from 'js-cookie'
 
 const Login = () => {
-
     const router = useRouter()
 
     const initialState = {
@@ -41,12 +40,9 @@ const Login = () => {
     const handleSubmit = async e => {
         e.preventDefault()
 
-
-
         let errs = validate()
 
         if (Object.values(errs).length === 0) {
-
             const { email, password } = state
 
             coachForYou
@@ -66,7 +62,7 @@ const Login = () => {
                         return
                     }
                 })
-                .catch(e => console.error('login failed------',e))
+                .catch(e => console.error('login failed------', e))
         } else {
             setErrors(errs)
         }
@@ -111,7 +107,9 @@ const Login = () => {
         <div className='page_wrapper'>
             <Segment basic stackable={true.toString()}>
                 <Grid columns={2} relaxed='very'>
-                    <Grid.Column width={8} className='centered'>
+                    <Grid.Column
+                        width={state.width <= 959 ? 10 : 8}
+                        className='centered'>
                         <Form onSubmit={handleSubmit} className='lefter'>
                             <h2 className='header'>Bienvenue !</h2>
                             <Form.Field>
@@ -154,7 +152,9 @@ const Login = () => {
                                     />
                                 </div>
                             </Form.Field>
-                            <Button content='Valider' type='submit' />
+                            <div style={{padding: '1rem'}} className='centered'>
+                                <Button color='black' content='Connexion' type='submit' />
+                            </div>
                         </Form>
                     </Grid.Column>
 

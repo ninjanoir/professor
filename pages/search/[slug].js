@@ -194,7 +194,7 @@ const Categorie = ({ coachs, avatar }) => {
                         <Header
                             as='h3'
                             className='centered brand'
-                            style={{ padding: '5rem' }}>
+                            >
                             Vous avez dit coach ?!
                         </Header>
 
