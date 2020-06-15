@@ -1,9 +1,7 @@
 const next = require('next')
 const db = require('../utils/dbConnect')
 
-
 db(process.env.MONGO_URI)
-
 
 const express = require('express')
 const bodyParser = require('body-parser')
@@ -34,16 +32,41 @@ app.prepare()
         server.use(bodyParser.json())
         server.use(cookieParser())
 
-        server.use('/api/coach', routeCoach)
-        server.use('/api/register', signUp)
-        server.use('/api/auth', signIn)
-        server.use('/api/member', memberPlace)
-        server.use('/api/upload', postAvatar)
-        server.use('/api/categorie', categorie)
-        server.use('/api/pros', entreprise)
-        server.use('/api/subscribe', newsletter)
-        server.use('/api/posts', postsRoute)
-        server.use('/api/mailer', contactMailer)
+        server.use('/api/coach', routeCoach, (req, res) => {
+            return app.render(req, res, '/', req.query)
+        })
+
+        server.use('/api/coach', routeCoach, (req, res) => {
+            return app.render(req, res, '/search', req.query)
+        })
+
+        server.use('/api/register', signUp, (req, res) => {
+            return app.render(req, res, '/register', req.query)
+        })
+        server.use('/api/auth', signIn, (req, res) => {
+            return app.render(req, res, '/login', req.query)
+        })
+        server.use('/api/member', memberPlace, (req, res) => {
+            return app.render(req, res, '/member', req.query)
+        })
+        server.use('/api/upload', postAvatar, (req, res) => {
+            return app.render(req, res, '/member', req.query)
+        })
+        server.use('/api/categorie', categorie, (req, res) => {
+            return app.render(req, res, '/admin', req.query)
+        })
+        server.use('/api/pros', entreprise, (req, res) => {
+            return app.render(req, res, '/member', req.query)
+        })
+        server.use('/api/subscribe', newsletter, (req, res) => {
+            return app.render(req, res, '/', req.query)
+        })
+        server.use('/api/posts', postsRoute, (req, res) => {
+            return app.render(req, res, '/profile/', req.query)
+        })
+        server.use('/api/mailer', contactMailer, (req, res) => {
+            return app.render(req, res, '/profile/', req.query)
+        })
         server.use('/api/upload', express.static('./public/uploads'))
 
         server.all('*', (req, res) => {
