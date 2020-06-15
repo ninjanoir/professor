@@ -188,7 +188,7 @@ class Index extends React.Component {
 
 Index.getInitialProps = async () => {
     const res = await coachForYou
-        .get('/coach')
+        .get('/api/coach')
         .catch(e => console.error('fetch coach index failed', e))
     const data = res.data.response
 

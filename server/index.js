@@ -77,7 +77,6 @@ app.prepare()
             if (err) console.error('une erreur est survenue', err)
 
             console.log(`Prêt sur le port ${port}`)
-            console.log('API BASEURL', `${process.env.API_PROD}`)
         })
     })
     .catch(err => {

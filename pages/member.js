@@ -89,7 +89,7 @@ class Member extends React.Component {
         e.stopPropagation()
 
         coachForYou
-            .put('/member/update', { [e.target.name]: e.target.value })
+            .put('/api/member/update', { [e.target.name]: e.target.value })
             .then(res => {
                 console.log(res.data)
             })
@@ -102,8 +102,8 @@ class Member extends React.Component {
         const { member, competence } = this.state
 
         let request = member.isCoach
-            ? coachForYou.put('/coach/update', { competence })
-            : coachForYou.post('/coach', { competence })
+            ? coachForYou.put('/api/coach/update', { competence })
+            : coachForYou.post('/api/coach', { competence })
 
         request
             .then(res => {
@@ -118,8 +118,8 @@ class Member extends React.Component {
         const { coach, member } = this.state
 
         let request = member.isCoach
-            ? coachForYou.put('/coach/update', coach)
-            : coachForYou.post('/coach', coach)
+            ? coachForYou.put('/api/coach/update', coach)
+            : coachForYou.post('/api/coach', coach)
 
         request
             .then(res => {
@@ -144,8 +144,8 @@ class Member extends React.Component {
         }
         let request =
             Object.values(this.state.entreprise).length === 1
-                ? coachForYou.post('/pros', entreprise)
-                : coachForYou.put('/pros/update', update)
+                ? coachForYou.post('/api/pros', entreprise)
+                : coachForYou.put('/api/pros/update', update)
 
         request
             .then(res => {
@@ -212,7 +212,7 @@ class Member extends React.Component {
 
     getMember = async () => {
         coachForYou
-            .get('/member')
+            .get('/api/member')
             .then(res => {
                 if (res.data.entreprise) {
                     this.setState({ entreprise: res.data.entreprise })
@@ -252,7 +252,7 @@ class Member extends React.Component {
             return
         } else {
             coachForYou
-                .get(`/categorie/${this.state.value}`)
+                .get(`/api/categorie/${this.state.value}`)
                 .then(res => {
                     if (res.data.length !== 0) {
                         let tab = []
@@ -294,8 +294,8 @@ class Member extends React.Component {
         let avartarId = member._id
 
         let request = member.avatar
-            ? coachForYou.put(`/upload/${avartarId}`, form, { headers })
-            : coachForYou.post('/upload', form, { headers })
+            ? coachForYou.put(`/api/upload/${avartarId}`, form, { headers })
+            : coachForYou.post('/api/upload', form, { headers })
 
         request
             .then(response => {

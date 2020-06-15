@@ -19,7 +19,7 @@ export default class Contact extends React.Component {
 
         if (Object.values(errs).length === 0) {
             coachForYou
-                .post('/mailer', { nom, email, message })
+                .post('/api/mailer', { nom, email, message })
                 .then(res => {
                     if (res.data.success) {
                         this.setState({

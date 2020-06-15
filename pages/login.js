@@ -50,7 +50,7 @@ const Login = () => {
             const { email, password } = state
 
             coachForYou
-                .post('/auth', { email, password })
+                .post('/api/auth', { email, password })
                 .then(res => {
                     if (res.data.success) {
                         Cookies.set(

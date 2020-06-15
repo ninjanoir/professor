@@ -74,7 +74,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
 
         if (Object.values(err).length === 0) {
             coachForYou
-                .post('/posts', {
+                .post('/api/posts', {
                     coachId: profil._id,
                     info,
                 })
@@ -141,7 +141,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
             const { nom, email, message } = form
 
             coachForYou
-                .post('/mailer', { nom, email, message })
+                .post('/api/mailer', { nom, email, message })
                 .then(res => {
                     if (res.data.success) {
                         setResponse('message envoyé avec succes')
@@ -258,7 +258,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
             setPosts([...posts, form2])
 
             coachForYou
-                .post('/posts', {
+                .post('/api/posts', {
                     coachId: profil._id,
                     ...form2,
                 })
@@ -346,7 +346,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
     //-----------------------------------------------delete Post
     const deletePost = post => {
         coachForYou
-            .delete(`/posts/${post._id}`)
+            .delete(`/api/posts/${post._id}`)
             .then(res => {
                 if (res.data.success) {
                     let newStatePosts = posts.filter(el => {
@@ -507,7 +507,7 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
 export async function getServerSideProps({ query }) {
 
     
-    const res = await coachForYou.get(`/posts/${query.id}`)
+    const res = await coachForYou.get(`/api/posts/${query.id}`)
     const data = await res.data
 
     return { props: { data } }

@@ -49,7 +49,7 @@ const Categorie = ({ coachs, avatar }) => {
             let resquest = e.target.textContent
 
             coachForYou
-                .get(`/coach/${resquest}`)
+                .get(`/api/coach/${resquest}`)
                 .then(res => {
                     if (res.data.success) {
                         router.push(`/search/${resquest}`)
@@ -63,7 +63,7 @@ const Categorie = ({ coachs, avatar }) => {
 
     const handleSearch = search => {
         coachForYou
-            .get(`/categorie/${search}`)
+            .get(`/api/categorie/${search}`)
             .then(res => {
                 let transOps = res.data.map(cat => {
                     return { title: cat.nom }
@@ -137,7 +137,7 @@ const Categorie = ({ coachs, avatar }) => {
         e.persist()
 
         coachForYou
-            .get(`/coach/${e.target.textContent.toLowerCase()}`)
+            .get(`/api/coach/${e.target.textContent.toLowerCase()}`)
             .then(res => {
                 if (res.data.success) {
                     router.push(`/search/${e.target.textContent.toLowerCase()}`)
@@ -261,7 +261,7 @@ const Categorie = ({ coachs, avatar }) => {
 }
 
 export async function getServerSideProps({ query }) {
-    const res = await coachForYou.get(`/coach/${query.slug}`)
+    const res = await coachForYou.get(`/api/coach/${query.slug}`)
     let data = res.data
 
     if (data.success) {

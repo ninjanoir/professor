@@ -25,7 +25,7 @@ module.exports = {
         MONGO_URI: process.env.MONGO_URI,
     },
     publicRuntimeConfig: {
-        API_ENDPOINT: `${process.env.LOCALHOST}:${process.env.PORT}/api`,
+        API_ENDPOINT: `${process.env.LOCALHOST}:${process.env.PORT}`,
         API_PROD: process.env.API_PROD
 
     },

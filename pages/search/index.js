@@ -47,7 +47,7 @@ const Search = ({ coachs }) => {
             let resquest = e.target.textContent
 
             coachForYou
-                .get(`/coach/${resquest}`)
+                .get(`/api/coach/${resquest}`)
                 .then(res => {
                     if (res.data.success) {
                         router.push(`/search/${resquest}`)
@@ -70,7 +70,7 @@ const Search = ({ coachs }) => {
 
     const handleSearch = search => {
         coachForYou
-            .get(`/categorie/${search}`)
+            .get(`/api/categorie/${search}`)
             .then(res => {
                 let transOps = res.data.map(cat => {
                     return { title: cat.nom }
@@ -138,7 +138,7 @@ const Search = ({ coachs }) => {
     const handleSelect = e => {
         e.persist()
         coachForYou
-            .get(`/coach/${e.target.textContent.toLowerCase()}`)
+            .get(`/api/coach/${e.target.textContent.toLowerCase()}`)
             .then(res => {
                 if (res.data.success) {
                     router.push(`/search/${e.target.textContent.toLowerCase()}`)
@@ -249,7 +249,7 @@ const Search = ({ coachs }) => {
 }
 
 export async function getServerSideProps() {
-    const res = await coachForYou.get('/coach')
+    const res = await coachForYou.get('/api/coach')
     let data = res.data
 
     if (data.success) {
