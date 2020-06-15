@@ -76,7 +76,7 @@ app.prepare()
         server.listen(port, err => {
             if (err) console.error('une erreur est survenue', err)
 
-            console.log(`Prêt sur le port ${port}`)
+            console.log(`Prêt sur le port ${port}, et sur le host ${process.env.host}`)
         })
     })
     .catch(err => {
