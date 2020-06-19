@@ -36,7 +36,7 @@ export default class StayTuned extends React.Component {
 
         if (Object.values(errs).length === 0) {
             coachForYou
-                .post('/subscribe', { email: this.state.email })
+                .post('/api/subscribe', { email: this.state.email })
                 .then(res => {
                     if (res.data.success) {
                         this.setState({message: 'inscription réussie'}, ()=> this.renderMessage())
