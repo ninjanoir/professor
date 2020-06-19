@@ -10,11 +10,11 @@ const Slider = () => {
             <div className='carousel'>
                 <Card
                     image='https://cdn.pixabay.com/photo/2019/08/14/07/24/cook-4404944_960_720.jpg'
-                    header='Bastien le cuisto Pro'
-                    meta='Spécialté mé asiatique'
-                    description='il cuisine comme pro et ravi tous les amateur de nems'
+                    header='Chef Bastien'
+                    meta='Spécialiste de la cuisine asiatique'
+                    description='Je vous aide à développer votre restaurant'
                     extra={
-                        <Rating icon='heart' defaultRating={1} maxRating={5} />
+                        <Rating icon='heart' defaultRating={4} maxRating={5} />
                     }
                 />
             </div>
