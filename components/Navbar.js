@@ -3,9 +3,6 @@ import { Menu, Button, Icon, Dropdown } from 'semantic-ui-react'
 import Cookies from 'js-cookie'
 import { useRouter } from 'next/router'
 
-
-
-
 const Navbar = () => {
     const router = useRouter()
     const [isloggIn, setIsloggIn] = useState(false)
@@ -31,7 +28,7 @@ const Navbar = () => {
             <Dropdown
                 className='right'
                 item
-                style={{fontSize: '1.1rem'}}
+                style={{ fontSize: '1.1rem' }}
                 icon={isloggIn ? 'user circle outline' : 'sidebar'}>
                 <Dropdown.Menu>
                     {isloggIn ? (
@@ -40,7 +37,7 @@ const Navbar = () => {
                         </Menu.Item>
                     ) : null}
                     <Dropdown.Item onClick={() => router.push('/about')}>
-                        A propos
+                        Qui-sommes-nous
                     </Dropdown.Item>
                     <Dropdown.Item onClick={() => router.push('/contact')}>
                         Contact
@@ -62,12 +59,18 @@ const Navbar = () => {
     const renderStandartMenu = () => {
         return (
             <Menu.Item className='right'>
+                <Menu.Item onClick={() => router.push('/offres')}>
+                    tarif
+                </Menu.Item>
+                <Menu.Item onClick={() => router.push('/search')}>
+                    coachs
+                </Menu.Item>
                 <Menu.Item onClick={() => router.push('/about')}>
-                    A propos
+                    a-propos
                 </Menu.Item>
 
                 <Menu.Item onClick={() => router.push('/contact')}>
-                    Contact
+                    contact
                 </Menu.Item>
 
                 {isloggIn ? (
@@ -80,7 +83,8 @@ const Navbar = () => {
                     <Button
                         icon
                         labelPosition='left'
-                        color={isloggIn ? 'red' : 'teal'}>
+                        className='btn_login'
+                        color={isloggIn ? 'red' : '#F6A02E'}>
                         <Icon name='users' />
                         {isloggIn ? 'Se déconnecter' : 'Se connecter'}
                     </Button>
@@ -116,22 +120,12 @@ const Navbar = () => {
     }, [isloggIn, router.route])
 
     return (
-        <Menu secondary className='yellow inverted fixed'>
+        <Menu secondary className='fixed'>
             <Menu.Item
                 className='ui header logo'
                 onClick={() => router.push('/')}>
                 COACHS FOR YOU
             </Menu.Item>
-            <Dropdown style={{fontSize: '1.1rem'}} text='Be Coach' className='link pointing item icon'>
-                <Dropdown.Menu>
-                    <Menu.Item onClick={() => router.push('/offres')}>
-                        Free Test
-                    </Menu.Item>
-                    <Menu.Item onClick={() => router.push('/search')}>
-                        Coachs Online
-                    </Menu.Item>
-                </Dropdown.Menu>
-            </Dropdown>
 
             {widthOfWindow <= 960 ? renderMobileMenu() : renderStandartMenu()}
         </Menu>

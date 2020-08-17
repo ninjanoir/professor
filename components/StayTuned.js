@@ -88,7 +88,7 @@ export default class StayTuned extends React.Component {
                             Partagez nous please !
                         </Header>
                         <div className='centered'>
-                            <Button onClick={() => Router.push(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://coach-for-you.herokuapp.com/')}`)} circular color='facebook' icon='facebook' />
+                            <Button circular color='facebook' icon='facebook' />
                             <Button circular color='twitter' icon='twitter' />
                             <Button circular color='linkedin' icon='linkedin' />
                             <Button

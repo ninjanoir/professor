@@ -2,10 +2,31 @@
 
 body {
     position: relative;
+
+    .btn_primary {
+        background-color: #f6a02e !important;
+        color: white !important;
+
+        &:hover {
+            background-color: #d17e12 !important;
+            color: white;
+        }
+    }
+
+    i.icon.sidebar:before {
+        font-size: 2.7vh;
+        color: #f6a02e;
+        text-shadow: 0 0 0.2rem #c1bdbd;
+    }
 }
 
-main{
+main {
     padding-bottom: 5rem;
+    h2 {
+        font-family: 'Anton', sans-serif !important;
+        font-size: 2.7vh !important;
+        font-weight: 800 !important;
+    }
 }
 
 ._search {
@@ -14,10 +35,9 @@ main{
 
 .page_wrapper {
     padding: 12rem 2rem 2rem 2rem;
-    @media (min-width: 760px){
+    @media (min-width: 760px) {
         padding: 12rem 2rem 12rem 2rem;
     }
-
 }
 
 .page_wrapper_bis {
@@ -36,17 +56,22 @@ main{
     }
 }
 
-.slider-action{
+.slider-action {
     position: absolute;
     bottom: 15%;
     z-index: 1;
     left: 5%;
+    width: 40%;
 }
-
 
 .box {
     margin-bottom: 5rem;
     position: relative;
+    background-color: #e9dacc;
+
+    img {
+        opacity: 0.7;
+    }
 }
 
 .centered {
@@ -82,6 +107,7 @@ main{
     font-family: 'Anton', sans-serif !important;
     font-size: 3rem !important;
     padding-top: 0 !important;
+    text-shadow: 0 0 0.2rem gray;
 
     &:before {
         content: '' !important;
@@ -99,8 +125,46 @@ main{
 
 .logo {
     font-family: 'Anton', sans-serif !important;
-    font-size: 1.5rem !important;
+    font-size: 2.5rem !important;
     letter-spacing: 0.1rem;
+    color: #f6a02e !important;
+    text-shadow: 0 0 0.2rem #b1adad;
+
+    &:hover {
+        background-color: transparent !important;
+    }
+}
+
+.drop {
+    color: #f6a02e !important;
+
+    &:hover {
+        background: transparent !important;
+    }
+}
+
+header {
+    .right {
+        .item {
+            color: #f6a02e !important;
+            font-size: 1.7vh !important;
+
+            &:hover {
+                background: transparent !important;
+                text-decoration: underline !important;
+            }
+        }
+
+        .btn_login {
+            background-color: #f6a02e;
+            color: white;
+
+            &:hover {
+                background-color: #d17e12;
+                color: white;
+            }
+        }
+    }
 }
 
 .brand_small {

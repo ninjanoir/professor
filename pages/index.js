@@ -91,7 +91,7 @@ class Index extends React.Component {
     render() {
         const { currentPosts } = this.state
 
-
+        console.log(currentPosts)
         if (!currentPosts) {
             return <div>Chargement...</div>
         }
@@ -109,6 +109,7 @@ class Index extends React.Component {
                 <Grid container stackable>
                     <Grid.Row columns={4} className='centered'>
                         {currentPosts.map((coach, index) => (
+                            
                             <Grid.Column width={5} key={index}>
                                 <Card centered>
                                     <Dimmer.Dimmable

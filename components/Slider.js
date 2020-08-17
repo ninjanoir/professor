@@ -24,11 +24,11 @@ const Slider = () => {
 
                 <Button
                     icon
-                    size='big'
-                    color='red'
+                    size='large'
+                    className='btn_primary'
                     labelPosition='right'
                     onClick={() => router.push('/search')}>
-                        <Icon name='right arrow'/> Coachs OnLine !
+                        <Icon name='right arrow'/> Trouvez un coach
                 </Button>
             </div>
 
