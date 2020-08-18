@@ -64,8 +64,13 @@ main {
     width: 60%;
 
 
-    @media (max-width: 450px){
+    @media (min-width: 360px) and (max-width: 500px){
         bottom: -20% !important;
+        width: 90% !important;
+    }
+
+    @media (max-width: 359px){
+        bottom: -54% !important;
         width: 90% !important;
     }
 }
@@ -242,3 +247,4 @@ header {
         transform: translateX(0);
     }
 }
+

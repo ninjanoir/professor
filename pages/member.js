@@ -19,6 +19,8 @@ import {
 import NavForProfile from './../components/NavForProfile'
 
 import Searchbar from './../components/Searchbar'
+import Competence from './../components/Competence'
+import { Notyf } from 'notyf'
 
 class Member extends React.Component {
     constructor(props) {
@@ -85,25 +87,34 @@ class Member extends React.Component {
     }
 
     //------------Update Membre profile, Coach, Entreprise--------------------
-    submitUpdateMember = async e => {
-        e.stopPropagation()
+    submitUpdateMember = even => {
+        even.stopPropagation()
 
         coachForYou
-            .put('/api/member/update', { [e.target.name]: e.target.value })
+            .put('/api/member/update', {
+                [even.target.name]: even.target.value,
+            })
             .then(res => {
                 console.log(res.data)
             })
-            .catch(e => console.log(e))
+            .catch(err => console.log('update member failed---', err))
 
         return
     }
 
-    submitCompetences = async () => {
+    /**********************************************************************
+     *
+     *                          Submit Competence
+     *
+     ********************************************************************/
+    submitCompetences = () => {
         const { member, competence } = this.state
 
-        let request = member.isCoach
-            ? coachForYou.put('/api/coach/update', { competence })
-            : coachForYou.post('/api/coach', { competence })
+        let request
+
+        member.isCoach
+            ? (request = coachForYou.put('/api/coach/update', { competence }))
+            : (request = coachForYou.post('/api/coach', { competence }))
 
         request
             .then(res => {
@@ -111,33 +122,51 @@ class Member extends React.Component {
                     console.log('update competence reussi')
                 }
             })
-            .catch(e => console.log(e))
+            .catch(err => console.log('update compétences failed---', err))
     }
 
-    submitCoach = async e => {
+    /**********************************************************************
+     *
+     *                          Submit Coach
+     *
+     ********************************************************************/
+
+    submitCoach = ev => {
         const { coach, member } = this.state
 
-        let request = member.isCoach
-            ? coachForYou.put('/api/coach/update', coach)
-            : coachForYou.post('/api/coach', coach)
+        let request
+
+        member.isCoach
+            ? (request = coachForYou.put('/api/coach/update', coach))
+            : (request = coachForYou.post('/api/coach', coach))
 
         request
             .then(res => {
+
+                let notyf = new Notyf({
+                    duration: 5000,
+                    position: {
+                        x: 'center',
+                        y: 'center',
+                    },
+
+                })
+
                 if (res.data.success) {
-                    this.setState(
-                        { message: 'mise à jour du profil réussi' },
-                        () => this.renderMessage()
-                    )
+
+
+                    notyf.success("mise à jour réussi")
+
+
                 } else {
-                    this.setState({ message: 'Echec de la mise à jour' }, () =>
-                        this.renderMessage()
-                    )
+
+                    notyf.error("echec de la mise à jour du profil")
                 }
             })
-            .catch(e => console.error('submit coach failed------', e))
+            .catch(err => console.error('submit coach failed------', err))
     }
 
-    submitEntreprise = async e => {
+    submitEntreprise = event => {
         const { entreprise } = this.state
         let update = {
             [e.target.name]: entreprise[e.target.name],
@@ -179,15 +208,13 @@ class Member extends React.Component {
         return
     }
 
-    setCoach = e => {
+    setCoach = event => {
         this.setState({
             coach: {
                 ...this.state.coach,
-                [e.target.name]: e.target.value,
+                [event.target.name]: event.target.value,
             },
         })
-
-        return
     }
 
     //-------------------------------------life cycle : -------------------------------------
@@ -273,13 +300,19 @@ class Member extends React.Component {
     }
 
     //--------------------------------------upload File--------------------------------
-    fileChange = e => {
+    fileChange = event => {
         e.stopPropagation()
 
-        this.setState({ file: e.target.files[0] }, () =>
+        this.setState({ file: event.target.files[0] }, () =>
             this.setState({ message: this.state.file.name })
         )
     }
+
+    /**********************************************************************
+     *
+     *                          Handle Upload Avatar
+     *
+     ********************************************************************/
 
     fileUpload = () => {
         let form = new FormData()
@@ -293,9 +326,13 @@ class Member extends React.Component {
 
         let avartarId = member._id
 
-        let request = member.avatar
-            ? coachForYou.put(`/api/upload/${avartarId}`, form, { headers })
-            : coachForYou.post('/api/upload', form, { headers })
+        let request
+
+        member.avatar
+            ? (request = coachForYou.put(`/api/upload/${avartarId}`, form, {
+                  headers,
+              }))
+            : (request = coachForYou.post('/api/upload', form, { headers }))
 
         request
             .then(response => {
@@ -310,7 +347,7 @@ class Member extends React.Component {
                     )
                 }
             })
-            .catch(e => console.error('file upload failed--->', e))
+            .catch(err => console.error('file upload failed--->', err))
     }
 
     renderMessage = () => {
@@ -319,7 +356,11 @@ class Member extends React.Component {
         }, 3000)
     }
 
-    //--------------------------------------hadle Tab----------------------------------
+    /**********************************************************************
+     *
+     *                          Handle TAB change
+     *
+     ********************************************************************/
 
     handleActivTab = val => {
         this.setState({ activeTab: val })
@@ -339,6 +380,12 @@ class Member extends React.Component {
                 return this.renderProfile()
         }
     }
+
+    /**********************************************************************
+     *
+     *                          Render section Profile
+     *
+     ********************************************************************/
 
     renderProfile = () => {
         const { member, message, coach, file } = this.state
@@ -490,6 +537,12 @@ class Member extends React.Component {
         )
     }
 
+    /**********************************************************************
+     *
+     *                          Render section Compétences
+     *
+     ********************************************************************/
+
     renderCompetences = () => {
         return (
             <div className='animated-tab'>
@@ -545,6 +598,12 @@ class Member extends React.Component {
             </div>
         )
     }
+
+    /**********************************************************************
+     *
+     *                          Render section Entreprise
+     *
+     ********************************************************************/
 
     renderEntreprise = () => {
         const { member, entreprise } = this.state
@@ -695,7 +754,11 @@ class Member extends React.Component {
         )
     }
 
-    //verif method searchbar pour update state array de competences
+    /****************************************************************************
+     *
+     *                               Render JSX
+     *
+     *******************************************************************/
 
     render() {
         return (

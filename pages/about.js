@@ -29,7 +29,7 @@ const About = () => (
             partage de connaissance. Le monde sera un lieu plus agréable à
             vivre, car la paix, la joie sera nôtre.
             <div className='spacer'>
-                <Header as='h2' className='spacer brand'>
+                <Header as='h2' className='brand'>
                     Quel coach etes vous ?
                 </Header>
 
