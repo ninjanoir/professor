@@ -90,8 +90,8 @@ class Index extends React.Component {
 
     render() {
         const { currentPosts } = this.state
-
         console.log(currentPosts)
+
         if (!currentPosts) {
             return <div>Chargement...</div>
         }
@@ -117,7 +117,7 @@ class Index extends React.Component {
                                         dimmer={this.renderContent(coach)}
                                         onMouseEnter={this.handleShow}
                                         onMouseLeave={this.handleHide}
-                                        src={coach.avatar.avatar.slice(6)}
+                                        src={coach.avatar !== null ? coach.avatar.avatar.slice(6) : "https://images.unsplash.com/photo-1481174228429-b2c3f5680a7a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"}
                                         size='medium'
                                     />
                                     <Card.Content className='leftAlign'>

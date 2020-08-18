@@ -425,9 +425,9 @@ const Profile = ({ data: { profil, coachPost, imageProfil } }) => {
                             <Item.Image
                                 size='tiny'
                                 src={
-                                    imageProfil.avatar
+                                    imageProfil !== null
                                         ? `${imageProfil.avatar.slice(6)}`
-                                        : 'https://react.semantic-ui.com/images/avatar/large/stevie.jpg'
+                                        : "https://images.unsplash.com/photo-1481174228429-b2c3f5680a7a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1234&q=80"
                                 }
                                 circular
                             />

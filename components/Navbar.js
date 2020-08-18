@@ -84,7 +84,7 @@ const Navbar = () => {
                         icon
                         labelPosition='left'
                         className='btn_login'
-                        color={isloggIn ? 'red' : '#F6A02E'}>
+                        color={isloggIn ? 'red' : null}>
                         <Icon name='users' />
                         {isloggIn ? 'Se déconnecter' : 'Se connecter'}
                     </Button>
