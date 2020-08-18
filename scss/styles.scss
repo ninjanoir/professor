@@ -61,7 +61,13 @@ main {
     bottom: 15%;
     z-index: 1;
     left: 5%;
-    width: 40%;
+    width: 60%;
+
+
+    @media (max-width: 450px){
+        bottom: -20% !important;
+        width: 70% !important;
+    }
 }
 
 .box {
