@@ -14,7 +14,7 @@ const router = useRouter()
                 <p className="centered slogan">Coach for you est le réseau de coachs actifs et expérimentés qui vous donne les bons conseils et vous aide à réussir haut la main tous vos projets. nous vous convions à notre grande fête</p>
 
                 <div className="centered">
-                    <Button onClick={()=>{router.push('/contact')}} color='teal' content='Contact' icon='right arrow' labelPosition='right' />
+                    <Button className='btn_primary' onClick={()=>{router.push('/contact')}} color='teal' content='Contact' icon='right arrow' labelPosition='right' />
                 </div>
 
                 <div className="copyr">© copyrigth 2020, Coachs for you</div>
